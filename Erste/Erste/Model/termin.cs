@@ -19,7 +19,7 @@ namespace Erste
 
         public TimeSpan Do { get; set; }
 
-        public int? IdGrupe { get; set; }
+        public int? GrupaId { get; set; }
 
         public virtual grupa grupa { get; set; }
     }

@@ -76,7 +76,7 @@ namespace Erste.Sluzbenik
 
         private void PopuniTermineCombo(ErsteModel ersteModel)
         {
-            var termini = ersteModel.termini.Where(e => e.IdGrupe != grupa.Id).ToList();
+            var termini = ersteModel.termini.Where(e => e.GrupaId != grupa.Id).ToList();
             dodavanjeTermina.Items.Clear();
             foreach (var termin in termini)
             {
@@ -160,7 +160,7 @@ namespace Erste.Sluzbenik
         private void PopuniTermine(ErsteModel ersteModel)
         {
             var list = ersteModel.termini
-                .Where(e => e.IdGrupe == grupa.Id)
+                .Where(e => e.GrupaId == grupa.Id)
                 .ToList();
             var newList = list.Select(e => new
             {

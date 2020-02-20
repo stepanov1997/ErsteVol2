@@ -40,7 +40,7 @@ namespace Erste
             modelBuilder.Entity<grupa>()
                 .HasMany(e => e.termini)
                 .WithOptional(e => e.grupa)
-                .HasForeignKey(e => e.IdGrupe);
+                .HasForeignKey(e => e.GrupaId);
 
             modelBuilder.Entity<grupa>()
                 .HasMany(e => e.polaznici)

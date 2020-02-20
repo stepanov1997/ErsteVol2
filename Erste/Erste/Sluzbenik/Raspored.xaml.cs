@@ -46,7 +46,7 @@ namespace Erste.Sluzbenik
 
                     List<TimetableItem> items = await (from termin in ersteModel.termini
                                                        where termin.grupa != null
-                                                       join grupa in ersteModel.grupe on termin.IdGrupe equals grupa.Id
+                                                       join grupa in ersteModel.grupe on termin.GrupaId equals grupa.Id
                                                        join kurs in ersteModel.kursevi on grupa.KursId equals kurs.Id
                                                        join jezik in ersteModel.jezici on kurs.JezikId equals jezik.Id
                                                        select new TimetableItem
@@ -56,7 +56,7 @@ namespace Erste.Sluzbenik
                                                            jezik = jezik.Naziv,
                                                            nivo = kurs.Nivo,
                                                            dan = termin.Dan,
-                                                           GrupaId = termin.IdGrupe,
+                                                           GrupaId = termin.GrupaId,
                                                            termin = termin
                                                        }).ToListAsync();
                     items.AddRange(
@@ -69,7 +69,7 @@ namespace Erste.Sluzbenik
                                    jezik = null,
                                    nivo = null,
                                    dan = termin.Dan,
-                                   GrupaId = termin.IdGrupe,
+                                   GrupaId = termin.GrupaId,
                                    termin = termin
                                }).ToListAsync());
 

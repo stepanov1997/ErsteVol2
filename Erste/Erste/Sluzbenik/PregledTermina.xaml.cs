@@ -110,7 +110,7 @@ namespace Erste.Sluzbenik
                     if (TimePickerDo.Value != null)
                         termin.Do = TimePickerDo.Value.Value.TimeOfDay;
                     if(GrupaCombo.Text!="Nije dodijeljena grupa" && !string.IsNullOrWhiteSpace(GrupaCombo.Text))
-                        termin.IdGrupe = (await ersteModel.grupe.FirstAsync(g => g.Naziv == GrupaCombo.Text)).Id;
+                        termin.GrupaId = (await ersteModel.grupe.FirstAsync(g => g.Naziv == GrupaCombo.Text)).Id;
                     await ersteModel.SaveChangesAsync();
                 }
             }
