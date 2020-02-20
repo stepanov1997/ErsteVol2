@@ -1,0 +1,34 @@
+﻿<Window x:Class="Erste.Administrator.EvidencijaKursaDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Erste.Administrator"
+        mc:Ignorable="d"
+        Title="EvidencijaKursaDialog" SizeToContent="WidthAndHeight" Height="356" Width="379"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid x:Name="grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="0" VerticalAlignment="Top" Margin="68,71,0,0" Height="26" HorizontalAlignment="Left" Width="56">Jezik:</Label>
+        <ComboBox Name="comboBox_Jezik" VerticalAlignment="Top" Margin="0,73,61,0" IsReadOnly="True" IsEditable="True" Text="Izaberite..." DisplayMemberPath="Naziv" Height="22" HorizontalAlignment="Right" Width="159"/>
+
+        <Label Grid.Column="0" VerticalAlignment="Top" Margin="68,113,0,0" Height="29" HorizontalAlignment="Left" Width="50">Nivo:</Label>
+        <TextBox Name="textBox_Nivo" VerticalAlignment="Top" Margin="153,115,61,108" Height="22"/>
+
+        <Label Grid.Column="0" VerticalAlignment="Top" Margin="68,152,0,0" Height="26" HorizontalAlignment="Left" Width="70">Datum od:</Label>
+        <DatePicker x:Name="TimePickerOd" Margin="0,155,60,0" Width="160" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
+        <Label Grid.Column="0" VerticalAlignment="Center" Margin="68,194,0,103" Height="30" HorizontalAlignment="Left" Width="69">Datum do:</Label>
+        <DatePicker x:Name="TimePickerDo" Margin="0,0,60,108" Width="160" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+
+        <Button x:Name="Button1" Content="Uredu" Click="Button1_Click" Grid.Column="0" Margin="73,256,0,0" Style="{DynamicResource buttonStyle}" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="95"/>
+        <Button x:Name="Button2" Content="Otkaži" Click="Button_Otkazi_Click" Margin="0,256,78,0" Style="{DynamicResource buttonStyle}" Height="28" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100"/>
+        <Label x:Name="label" Content="Podaci o kursu" Height="32" Margin="107,7,120,0" VerticalAlignment="Top"  FontSize="19" FontWeight="Bold" Foreground="DarkRed"/>
+    </Grid>
+</Window>

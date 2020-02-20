@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Erste.Sluzbenik.KandidatiNaCekanju"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Erste.Administrator"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <DataGrid Name="DataGrid" Grid.ColumnSpan="3" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" BeginningEdit="DataGrid_OnBeginningEdit" VerticalGridLinesBrush="#FFB2B2B2" HorizontalGridLinesBrush="#FFB2B2B2" CellStyle="{StaticResource DataGridCellErsteStyle}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding Path=osoba.Ime}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding Path=osoba.Prezime}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Email" Binding="{Binding Path=osoba.Email}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Broj telefona" Binding="{Binding Path=osoba.BrojTelefona}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Jezik" Binding="{Binding Path=Jezik}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Nivo kursa" Binding="{Binding Path=Nivo}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </Grid>
+</UserControl>

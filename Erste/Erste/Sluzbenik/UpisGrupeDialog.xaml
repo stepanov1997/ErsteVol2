@@ -1,0 +1,36 @@
+﻿<Window x:Class="Erste.Sluzbenik.UpisTerminaGrupe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:Erste.Sluzbenik"
+        mc:Ignorable="d"
+        Title="Erste" Height="450.022" Width="400.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Label VerticalAlignment="Bottom"  Margin="84,0,0,193" Height="26" Content="Dan:" HorizontalAlignment="Left" Width="43" />
+        <ComboBox x:Name="DanCombo" Margin="152,0,0,192.667" Height="22" ToolTip="Unesite dan kad će se održavati termin." HorizontalAlignment="Left" Width="159" VerticalAlignment="Bottom">
+            <ComboBox.Items>
+                <ComboBoxItem Content="Ponedjeljak"></ComboBoxItem>
+                <ComboBoxItem Content="Utorak"></ComboBoxItem>
+                <ComboBoxItem Content="Srijeda"></ComboBoxItem>
+                <ComboBoxItem Content="Četvrtak"></ComboBoxItem>
+                <ComboBoxItem Content="Petak"></ComboBoxItem>
+                <ComboBoxItem Content="Subota"></ComboBoxItem>
+                <ComboBoxItem Content="Nedjelja"></ComboBoxItem>
+            </ComboBox.Items>
+        </ComboBox>
+
+        <Label VerticalAlignment="Bottom" Height="25" Margin="87,0,0,155" Content="Od:" HorizontalAlignment="Left" Width="29"/>
+
+        <Button x:Name="Button1" Content="Uredu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Button1Click" Margin="81,0,0,40.667" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="102"/>
+        <Button x:Name="Button2" Content="Otkaži" Click="Button_Otkazi_Click" Margin="0,0,53.667,40.667" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" HorizontalAlignment="Right" Width="108" VerticalAlignment="Bottom"/>
+        <Label VerticalAlignment="Bottom" Height="29" Margin="87,0,0,106" Content="Do:" RenderTransformOrigin="1.357,0.138" HorizontalAlignment="Left" Width="29"/>
+        <Label x:Name="label" Content="Podaci o terminu" Margin="106,0,89,241" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
+        <xctk:TimePicker x:Name="TimePickerOd" Value="{Binding CurrentDateTime}" Margin="152,0,0,154.667" HorizontalAlignment="Left" Width="160" Height="20" VerticalAlignment="Bottom"/>
+        <xctk:TimePicker x:Name="TimePickerDo" Value="{Binding CurrentDateTime}" Margin="152,0,0,114.667" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160"/>
+        <Label x:Name="label1" Content="Podaci o grupi" Margin="106,0,89,373" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
+        <Label VerticalAlignment="Bottom"  Margin="62,0,0,309" Height="26" Content="Naziv grupe:" HorizontalAlignment="Left" Width="86" />
+        <TextBox x:Name="textBox_NazivGrupe" HorizontalAlignment="Left" Height="23" Margin="177,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="159" TextChanged="TextBox_TextChanged"/>
+    </Grid>
+</Window>
