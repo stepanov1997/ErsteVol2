@@ -102,6 +102,7 @@ namespace Erste.Sluzbenik
                     Do = @do,
                     grupa = Grupa,
                     GrupaId = Grupa.Id,
+                    Vazeci = true
                 };
 
                 Grupa.DatumOd = DatePickerOd.SelectedDate.Value;
@@ -112,6 +113,7 @@ namespace Erste.Sluzbenik
                 Grupa.Naziv = textBox_NazivGrupe.Text;
                 Grupa.DatumOd = DateTime.Today;
                 Grupa.DatumDo = DateTime.Today.AddDays(180);
+                Grupa.Vazeca = true;
                 ErsteModel.SaveChanges();
                 MessageBox.Show("Uspješno ste dodali novi termin.");
             }

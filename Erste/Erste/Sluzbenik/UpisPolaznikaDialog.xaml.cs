@@ -151,6 +151,7 @@ namespace Erste.Sluzbenik
             o.Prezime = textBox_Prezime.Text;
             o.BrojTelefona = textBox_BrojTelefona.Text;
             o.Email = textBox_Email.Text;
+            o.Vazeci = true;
             polaznik p = new polaznik();
             p.osoba = o;
 
