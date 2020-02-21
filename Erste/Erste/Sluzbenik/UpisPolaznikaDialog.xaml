@@ -55,8 +55,8 @@
                         <DataGridTextColumn Width="*" Header="Jezik" Binding="{Binding Path=Jezik.Naziv}"></DataGridTextColumn>
                         <DataGridTextColumn Width="*" Header="Nivo kursa" Binding="{Binding Path=Kurs.Nivo}"></DataGridTextColumn>
                         <DataGridTextColumn Width="*" Header="Broj clanova" Binding="{Binding Path=Grupa.BrojClanova}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="*" Header="Datum pocetka kursa" Binding="{Binding Path=Kurs.DatumOd}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="*" Header="Datum završetka kursa" Binding="{Binding Path=Kurs.DatumDo}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Header="Datum pocetka kursa" Binding="{Binding Path=Grupa.DatumOd}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Header="Datum završetka kursa" Binding="{Binding Path=Grupa.DatumDo}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

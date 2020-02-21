@@ -38,7 +38,7 @@
         </Border>
 
         <Button x:Name="Button1" Grid.Column="0" Content="Zatvori prozor" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="Potvrdi_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Margin="427,470,391.667,0" Width="158" VerticalAlignment="Top"/>
-        <DataGrid x:Name="TerminiTable" HorizontalAlignment="Left" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" Margin="40,275,0,0" Width="415" Height="160" VerticalAlignment="Top">
+        <DataGrid x:Name="TerminiTable" HorizontalAlignment="Left" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" Margin="40,275,0,0" Width="415" Height="160" VerticalAlignment="Top" BeginningEdit="Table_OnBeginningEdit">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="80*" Header="Dan" Binding="{Binding Dan}"/>
                 <DataGridTextColumn Width="100*" Header="Početak termina" Binding="{Binding OdString}"/>
@@ -55,7 +55,7 @@
         <Border HorizontalAlignment="Left" Grid.RowSpan="1" Margin="620,35,0,0" Height="30" VerticalAlignment="Top" Width="205">
             <TextBlock Text="Polaznici" TextAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-        <DataGrid x:Name="PolazniciTable" Margin="520,60,0,0" HorizontalAlignment="Left" Width="415" Height="160" VerticalAlignment="Top" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}">
+        <DataGrid x:Name="PolazniciTable" Margin="520,60,0,0" HorizontalAlignment="Left" Width="415" Height="160" VerticalAlignment="Top" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" BeginningEdit="Table_OnBeginningEdit">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding osoba.Ime}"/>
                 <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding osoba.Prezime}"/>
@@ -70,7 +70,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="ProfesoriTable" Margin="520,275,0,0" HorizontalAlignment="Left" Width="415" Height="160" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" VerticalAlignment="Top">
+        <DataGrid x:Name="ProfesoriTable" Margin="520,275,0,0" HorizontalAlignment="Left" Width="415" Height="160" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" VerticalAlignment="Top" BeginningEdit="Table_OnBeginningEdit">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding osoba.Ime}"/>
                 <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding osoba.Prezime}"/>

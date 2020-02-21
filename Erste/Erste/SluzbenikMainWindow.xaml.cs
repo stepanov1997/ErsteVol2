@@ -161,9 +161,14 @@ namespace Erste
                     PregledGrupe pregledGrupe = new PregledGrupe(null);
                     pregledGrupe.ShowDialog();
                     ShowLastView();
+                    
                 });
             if(raspored.Visibility == Visibility.Visible)
                 await raspored.Refresh();
+            else if(kandidatiSvi.Visibility == Visibility.Visible)
+                await kandidatiSvi.Refresh();
+            else if (kandidatiCekanje.Visibility == Visibility.Visible)
+                await kandidatiCekanje.Refresh();
         }
 
         private async void DodajNovuGrupu_OnClick(object sender, RoutedEventArgs e)

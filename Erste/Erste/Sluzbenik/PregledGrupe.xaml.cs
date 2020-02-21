@@ -111,8 +111,9 @@ namespace Erste.Sluzbenik
                                       where p_na_c.kursevi.Any(k =>
                                           k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik))
                                       select p_na_c).ToList();
-
+            flag = false;
             dodavanjePolaznika.Items.Clear();
+            flag = true;
             foreach (var polaznikNaCekanju in polazniciNaCekanju)
             {
                 osoba osoba = polaznikNaCekanju.polaznik.osoba;
@@ -154,8 +155,10 @@ namespace Erste.Sluzbenik
                 return string.Compare(a.osoba.Prezime, b.osoba.Prezime, StringComparison.Ordinal);
             });
 
+            flag = false;
             PolazniciTable.Items.Clear();
             PolazniciTable.ItemsSource = null;
+            flag = true;
             foreach (var polaznik in list)
             {
                 if (polaznik.osoba != null)
@@ -273,7 +276,7 @@ namespace Erste.Sluzbenik
                     }
                 }
                 Init();
-                
+
                 dodavanjeProfesora.Text = "Dodjeli profesora";
             }
         }
@@ -312,7 +315,7 @@ namespace Erste.Sluzbenik
                         grupica.termini.Add(termin);
                         termin.grupa = grupica;
                         ersteModel.SaveChanges();
-                        
+
                     }
                 }
                 dodavanjeTermina.Text = "Dodjeli termin";
@@ -354,7 +357,7 @@ namespace Erste.Sluzbenik
                         string odabraniNivo = NivoKursa.Text;
                         string odabraniJezik = jezikKursa.Text;
                         polaznik_na_cekanju p_na_c = polaznik.polaznik_na_cekanju;
-                        kurs kurs_za_p_na_c = p_na_c.kursevi.First(k => k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
+                        kurs kurs_za_p_na_c = p_na_c.kursevi.First(k => k.Nivo == odabraniNivo && k.jezik.Naziv == odabraniJezik);
                         kurs_za_p_na_c.polaznici_na_cekanju.Remove(p_na_c);
                         p_na_c.kursevi.Remove(kurs_za_p_na_c);
                         p_na_c.polaznik.polaznik_na_cekanju = null;
@@ -401,8 +404,8 @@ namespace Erste.Sluzbenik
                 string odabraniNivo = NivoKursa.Text;
                 string odabraniJezik = jezikKursa.Text;
                 polaznik p = ersteModel.polaznici.Find(polaznik.Id);
-                polaznik_na_cekanju p_na_c = p.polaznik_na_cekanju = new polaznik_na_cekanju(){Id=p.Id, kursevi = new List<kurs>(), polaznik = p};
-                kurs kurs_za_p_na_c = ersteModel.kursevi.ToList().First(k =>  k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
+                polaznik_na_cekanju p_na_c = p.polaznik_na_cekanju = new polaznik_na_cekanju() { Id = p.Id, kursevi = new List<kurs>(), polaznik = p };
+                kurs kurs_za_p_na_c = ersteModel.kursevi.ToList().First(k => k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
                 kurs_za_p_na_c.polaznici_na_cekanju.Add(p_na_c);
                 p_na_c.kursevi.Add(kurs_za_p_na_c);
                 grupa grupica = ersteModel.grupe.Find(grupa.Id);
@@ -411,6 +414,11 @@ namespace Erste.Sluzbenik
                 ersteModel.SaveChanges();
             }
             Init();
+        }
+
+        private void Table_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
 

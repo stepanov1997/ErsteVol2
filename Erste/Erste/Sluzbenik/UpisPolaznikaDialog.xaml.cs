@@ -81,8 +81,8 @@ namespace Erste.Sluzbenik
 
                 var kursGrupa = (from g in ersteModel.grupe join k in ersteModel.kursevi on g.KursId equals k.Id
                              join j in ersteModel.jezici on k.JezikId equals j.Id
-                             where g.BrojClanova>=3 && g.DatumDo.CompareTo(DateTime.Now) > 0
-                             && j.Naziv.Equals(odabraniJezik) && k.Nivo.Equals(odabraniNivo)
+                             where g.polaznici.Count>=3 && g.DatumDo.CompareTo(DateTime.Now) > 0
+                             && j.Naziv == odabraniJezik && k.Nivo == odabraniNivo
                              select new GrupaKursZapis {
                                  Grupa = g,
                                  Kurs = k,
@@ -93,8 +93,10 @@ namespace Erste.Sluzbenik
                     MessageBox.Show("Nema formiranih grupa.");
                     return;
                 }
+                GrupeDataGrid.Items.Clear();
                 foreach (var zapis in kursGrupa)
                 {
+                    zapis.Grupa.BrojClanova = zapis.Grupa.polaznici.Count;
                     if(!GrupeDataGrid.Items.Contains(zapis))
                         GrupeDataGrid.Items.Add(zapis);
                 }
