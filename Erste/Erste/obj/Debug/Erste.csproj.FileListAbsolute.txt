@@ -630,3 +630,8 @@ C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.csproj.Generat
 C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.csproj.CopyComplete
 C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.exe
 C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.pdb
+C:\Users\Home\Source\Repos\stepanov1997\ErsteVol2\Erste\Erste\bin\Debug\MySql.Data.dll
+C:\Users\Home\Source\Repos\stepanov1997\ErsteVol2\Erste\Erste\bin\Debug\MySql.Data.EntityFramework.dll
+C:\Users\Home\Source\Repos\stepanov1997\ErsteVol2\Erste\Erste\bin\Debug\MySql.Data.xml
+C:\Users\Home\Source\Repos\stepanov1997\ErsteVol2\Erste\Erste\bin\Debug\MySql.Data.EntityFramework.xml
+C:\Users\Home\Source\Repos\stepanov1997\ErsteVol2\Erste\Erste\obj\Debug\Erste.exe.config
