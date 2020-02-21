@@ -22,5 +22,7 @@ namespace Erste
         public int? GrupaId { get; set; }
 
         public virtual grupa grupa { get; set; }
+
+        public bool Vazeci { get; set; }
     }
 }

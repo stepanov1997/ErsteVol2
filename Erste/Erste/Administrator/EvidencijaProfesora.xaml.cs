@@ -24,7 +24,7 @@ namespace Erste.Administrator
         {
             InitializeComponent();
         }
-
+        /*
         public void AddButtonActions(params Button[] buttons)
         {
             buttons[0].Click += (sender, args) =>
@@ -52,6 +52,7 @@ namespace Erste.Administrator
                 Load_Data();
             };
         }
+        */
 
         public void Refresh() => Load_Data();
 
@@ -65,8 +66,9 @@ namespace Erste.Administrator
                 using (var ersteModel = new ErsteModel())
                 {
                     var profesori = (from profesor in ersteModel.profesori
-                                      join osoba in ersteModel.osobe on profesor.Id equals osoba.Id
-                                      select profesor).ToList();
+                                     join osoba in ersteModel.osobe on profesor.Id equals osoba.Id
+                                     where osoba.Vazeci == true
+                                     select profesor).ToList();
 
                     foreach (var profesor in profesori)
                     {

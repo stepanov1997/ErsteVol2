@@ -24,7 +24,7 @@
         <Label VerticalAlignment="Top" Height="28" Margin="44,194,0,0" HorizontalAlignment="Left" Width="84">Broj telefona:</Label>
         <TextBox Name="textBox_BrojTelefona" VerticalAlignment="Top" Margin="0,198,81,0" Height="20" HorizontalAlignment="Right" Width="154"/>
 
-        <Button Name="Button1" Content="Uredu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Button1Click" Margin="77,264,0,0" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
+        <Button Name="Button1" Content="U redu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Button1Click" Margin="77,264,0,0" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="102"/>
         <Button Name="Button2" Content="Otkaži" Click="Button_Otkazi_Click" Margin="0,264,81,0" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" HorizontalAlignment="Right" Width="108" VerticalAlignment="Top"/>
         <Label VerticalAlignment="Top" Height="29" Margin="82,156,0,0" Content="Email:" HorizontalAlignment="Left" Width="51"/>
         <Label x:Name="label" Content="Podaci o profesoru" Margin="106,18,112,0" VerticalAlignment="Top" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>

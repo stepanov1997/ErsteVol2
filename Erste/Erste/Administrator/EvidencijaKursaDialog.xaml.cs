@@ -26,7 +26,7 @@ namespace Erste.Administrator
 
         private kurs kurs = null;
         private Boolean izmjena = false;
-        private const string uredu = "Uredu";
+        private const string uredu = "U redu";
         private const string otkazi = "Otkaži";
         private const string izmjeni = "Izmijeni";
         private const string obrisi = "Obriši";
@@ -40,6 +40,7 @@ namespace Erste.Administrator
                 using (var ersteModel = new ErsteModel())
                 {
                     var jezici = (from jezik in ersteModel.jezici
+                                  where jezik.Vazeci == true
                                   select jezik).ToList();
                     foreach (var jezik in jezici)
                     {
@@ -61,13 +62,9 @@ namespace Erste.Administrator
 
                 comboBox_Jezik.IsEnabled = false;
                 textBox_Nivo.IsEnabled = false;
-                TimePickerOd.IsEnabled = false;
-                TimePickerDo.IsEnabled = false;
 
                 comboBox_Jezik.SelectedIndex = comboBoxList.IndexOf(kurs.jezik);
                 textBox_Nivo.Text = kurs.Nivo;
-                //TimePickerOd.SelectedDate = kurs.DatumOd;
-                //TimePickerDo.SelectedDate = kurs.DatumDo;
             }
         }
 
@@ -80,8 +77,6 @@ namespace Erste.Administrator
                 {
                     comboBox_Jezik.IsEnabled = true;
                     textBox_Nivo.IsEnabled = true;
-                    TimePickerOd.IsEnabled = true;
-                    TimePickerDo.IsEnabled = true;
 
                     Button1.Content = uredu;
                     Button2.Content = otkazi;
@@ -89,7 +84,7 @@ namespace Erste.Administrator
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(textBox_Nivo.Text) && comboBox_Jezik.SelectedIndex != -1 && TimePickerOd.SelectedDate != null && TimePickerDo.SelectedDate != null)
+                    if (!String.IsNullOrEmpty(textBox_Nivo.Text) && comboBox_Jezik.SelectedIndex != -1)
                     {
                         try
                         {
@@ -98,8 +93,6 @@ namespace Erste.Administrator
                                 kurs = ersteModel.kursevi.Find(kurs.Id);
                                 kurs.Nivo = textBox_Nivo.Text;
                                 kurs.JezikId = (comboBox_Jezik.SelectedItem as jezik).Id;
-                                //kurs.DatumOd = TimePickerOd.SelectedDate.Value;
-                                //kurs.DatumDo = TimePickerDo.SelectedDate.Value;
                                 ersteModel.SaveChanges();
                                 MessageBox.Show("Kurs je uspješno izmijenjen.");
                                 Close();
@@ -117,10 +110,6 @@ namespace Erste.Administrator
                         foreach (var t in textBoxes)
                             if (String.IsNullOrEmpty(t.Text))
                                 t.BorderBrush = Brushes.Red;
-                        if (TimePickerOd.SelectedDate == null)
-                            TimePickerOd.BorderBrush = Brushes.Red;
-                        if (TimePickerDo.SelectedDate == null)
-                            TimePickerDo.BorderBrush = Brushes.Red;
                         if (comboBox_Jezik.SelectedIndex == -1)
                             comboBox_Jezik.BorderBrush = Brushes.Red;
                     }
@@ -128,13 +117,12 @@ namespace Erste.Administrator
             }
             else
             {
-                if (!String.IsNullOrEmpty(textBox_Nivo.Text) && comboBox_Jezik.SelectedIndex != -1 && TimePickerOd.SelectedDate != null && TimePickerDo.SelectedDate != null)
+                if (!String.IsNullOrEmpty(textBox_Nivo.Text) && comboBox_Jezik.SelectedIndex != -1)
                 {
                     kurs kurs = new kurs();
                     kurs.Nivo = textBox_Nivo.Text;
                     kurs.JezikId = (comboBox_Jezik.SelectedItem as jezik).Id;
-                    //kurs.DatumOd = TimePickerOd.SelectedDate.Value;
-                    //kurs.DatumDo = TimePickerDo.SelectedDate.Value;
+                    kurs.Vazeci = true;
 
                     try
                     {
@@ -157,10 +145,6 @@ namespace Erste.Administrator
                     foreach (var t in textBoxes)
                         if (String.IsNullOrEmpty(t.Text))
                             t.BorderBrush = Brushes.Red;
-                    if (TimePickerOd.SelectedDate == null)
-                        TimePickerOd.BorderBrush = Brushes.Red;
-                    if (TimePickerDo.SelectedDate == null)
-                        TimePickerDo.BorderBrush = Brushes.Red;
                     if (comboBox_Jezik.SelectedIndex == -1)
                         comboBox_Jezik.BorderBrush = Brushes.Red;
                 }
@@ -173,8 +157,6 @@ namespace Erste.Administrator
             foreach (var t in textBoxes)
                 if (!String.IsNullOrEmpty(t.Text))
                     t.ClearValue(Border.BorderBrushProperty);
-            TimePickerOd.ClearValue(Border.BorderBrushProperty);
-            TimePickerDo.ClearValue(Border.BorderBrushProperty);
             comboBox_Jezik.ClearValue(Border.BorderBrushProperty);
         }
 
@@ -203,7 +185,7 @@ namespace Erste.Administrator
                 using (var ersteModel = new ErsteModel())
                 {
                     kurs kurs_remove = ersteModel.kursevi.Find(kurs.Id);
-                    ersteModel.kursevi.Remove(kurs_remove);
+                    kurs_remove.Vazeci = false;
                     ersteModel.SaveChanges();
                 }
                 MessageBox.Show("Kurs je uspješno obrisan.");

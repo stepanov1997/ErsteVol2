@@ -24,7 +24,7 @@ namespace Erste.Administrator
         {
             InitializeComponent();
         }     
-
+        /*
         public void AddButtonActions(params Button[] buttons)
         {
             buttons[0].Click += (sender, args) =>
@@ -49,7 +49,7 @@ namespace Erste.Administrator
                 Load_Data();
             };
         }
-
+        */
         public void Refresh() => Load_Data();
 
         private void Load_Data()
@@ -63,6 +63,7 @@ namespace Erste.Administrator
                 {
                     var kursevi = (from kurs in ersteModel.kursevi
                                    join jezik in ersteModel.jezici on kurs.JezikId equals jezik.Id
+                                   where kurs.Vazeci == true
                                    select kurs).ToList();
 
                     foreach (var kurs in kursevi)

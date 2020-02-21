@@ -23,7 +23,7 @@ namespace Erste.Administrator
 
         private profesor profesor = null;
         private Boolean izmjena = false;
-        private const string uredu = "Uredu";
+        private const string uredu = "U redu";
         private const string otkazi = "Otkaži";
         private const string izmjeni = "Izmijeni";
         private const string obrisi = "Obriši";
@@ -117,6 +117,7 @@ namespace Erste.Administrator
                     profesor.osoba.Prezime = textBox_Prezime.Text;
                     profesor.osoba.Email = textBox_Email.Text;
                     profesor.osoba.BrojTelefona = textBox_BrojTelefona.Text;
+                    profesor.osoba.Vazeci = true;
 
                     try
                     {
@@ -178,7 +179,7 @@ namespace Erste.Administrator
                     profesor profesor_remove = ersteModel.profesori.Find(profesor.Id);
                     if (profesor_remove.osoba != null)
                     {
-                        ersteModel.osobe.Remove(profesor_remove.osoba);
+                        profesor_remove.osoba.Vazeci = false;
                         ersteModel.SaveChanges();
                     }
                 }
