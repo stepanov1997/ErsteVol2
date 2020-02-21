@@ -40,15 +40,13 @@ namespace Erste.Sluzbenik
                         listViewSunday
                     };
 
-                    await (from kurs in ersteModel.kursevi
-                           join jezik in ersteModel.jezici on kurs.JezikId equals jezik.Id
-                           select kurs).ToListAsync();
-
                     List<TimetableItem> items = await (from termin in ersteModel.termini
                                                        where termin.grupa != null
                                                        join grupa in ersteModel.grupe on termin.GrupaId equals grupa.Id
                                                        join kurs in ersteModel.kursevi on grupa.KursId equals kurs.Id
                                                        join jezik in ersteModel.jezici on kurs.JezikId equals jezik.Id
+                                                       where termin.Vazeci && grupa.Vazeca
+                                                            && kurs.Vazeci && jezik.Vazeci
                                                        select new TimetableItem
                                                        {
                                                            vrijemeOd = termin.Od,
@@ -61,7 +59,7 @@ namespace Erste.Sluzbenik
                                                        }).ToListAsync();
                     items.AddRange(
                         await (from termin in ersteModel.termini
-                               where termin.grupa == null
+                               where termin.grupa == null && termin.Vazeci
                                select new TimetableItem
                                {
                                    vrijemeOd = termin.Od,

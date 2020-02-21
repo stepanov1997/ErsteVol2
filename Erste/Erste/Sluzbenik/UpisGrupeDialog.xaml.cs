@@ -78,7 +78,9 @@ namespace Erste.Sluzbenik
                 MessageBox.Show("Odaberite kraj kursa.");
                 return;
             }
-            if (compare(DatePickerOd.SelectedDate, DatePickerDo.SelectedDate))
+
+            Func<DateTime?, DateTime?, bool> compareDatume = (a, b) => a?.Date.CompareTo(b?.Date) > 0;
+            if (compareDatume(DatePickerOd.SelectedDate, DatePickerDo.SelectedDate))
             {
                 MessageBox.Show("Datum početka mora biti prije datuma završetka.");
                 return;

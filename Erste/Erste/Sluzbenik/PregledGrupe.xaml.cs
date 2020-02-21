@@ -36,7 +36,7 @@ namespace Erste.Sluzbenik
             {
                 using (ErsteModel model = new ErsteModel())
                 {
-                    grupa = model.grupe.FirstOrDefault();
+                    grupa = model.grupe.FirstOrDefault(g => g.Vazeca);
                 }
             }
             if (grupa is null)
@@ -46,14 +46,14 @@ namespace Erste.Sluzbenik
             }
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                BrojClanovaBox.Text = $"{ersteModel.polaznici.Count(e => e.grupe.Any(g => g.Id == grupa.Id))}";
-                kurs kurs = ersteModel.kursevi.First(e => e.grupe.Any(p => p.Id == grupa.Id));
+                BrojClanovaBox.Text = $"{ersteModel.grupe.Where(g => g.Vazeca && g.Id==grupa.Id).Select(g => g.BrojClanova).First()}";
+                kurs kurs = ersteModel.kursevi.Where(k => k.Vazeci).First(e => e.grupe.Where(g => g.Vazeca).Any(p => p.Id == grupa.Id));
                 if (!(kurs is null))
                 {
                     flag = false;
                     NazivGrupeCombo.Items.Clear();
                     NazivGrupeCombo.ItemsSource = null;
-                    var grupe = ersteModel.grupe.Select(e => e.Naziv).ToList();
+                    var grupe = ersteModel.grupe.Where(g => g.Vazeca).Select(e => e.Naziv).ToList();
                     foreach (var naziv in grupe)
                     {
                         NazivGrupeCombo.Items.Add(naziv);
@@ -61,7 +61,7 @@ namespace Erste.Sluzbenik
                     NazivGrupeCombo.SelectedIndex = grupe.IndexOf(grupa.Naziv);
                     flag = true;
                     NivoKursa.Text = $"{kurs.Nivo}";
-                    jezik jezik = ersteModel.jezici.Find(kurs.JezikId);
+                    jezik jezik = ersteModel.jezici.Where(j => j.Vazeci).Where(j => j.kursevi.Where(k => k.Vazeci).Any(k => k.Id==kurs.Id)).First();
                     if (!(jezik is null))
                         jezikKursa.Text = $"{jezik.Naziv}";
                     datumOd.Text = grupa.DatumOd.ToString("dd.MM.yyyy");
@@ -78,7 +78,7 @@ namespace Erste.Sluzbenik
 
         private void PopuniTermineCombo(ErsteModel ersteModel)
         {
-            var termini = ersteModel.termini.Where(e => e.grupa == null).ToList();
+            var termini = ersteModel.termini.Where(e => e.Vazeci && e.grupa == null).ToList();
             dodavanjeTermina.Items.Clear();
             foreach (var termin in termini)
             {
@@ -89,7 +89,7 @@ namespace Erste.Sluzbenik
         private void PopuniProfesoreCombo(ErsteModel ersteModel)
         {
             //var profesori = ersteModel.profesori.Where(e => e.kursevi.Any(k => k.jezik.Naziv == jezikKursa.Text)).ToList();
-            var profesori = ersteModel.profesori.ToList();
+            var profesori = ersteModel.profesori.Where(p => p.osoba.Vazeci).ToList();
             foreach (profesor profesor in ProfesoriTable.Items)
             {
                 profesori.RemoveAll(e => e.Id == profesor.Id);
@@ -108,8 +108,8 @@ namespace Erste.Sluzbenik
             string odabraniNivo = NivoKursa.Text;
             string odabraniJezik = jezikKursa.Text;
             var polazniciNaCekanju = (from p_na_c in ersteModel.polaznici_na_cekanju
-                                      where p_na_c.kursevi.Any(k =>
-                                          k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik))
+                                      where p_na_c.polaznik.osoba.Vazeci && p_na_c.kursevi.Any(k =>
+                                           k.Vazeci && k.Nivo.Equals(odabraniNivo) && k.jezik.Vazeci && k.jezik.Naziv.Equals(odabraniJezik))
                                       select p_na_c).ToList();
             flag = false;
             dodavanjePolaznika.Items.Clear();
@@ -124,7 +124,7 @@ namespace Erste.Sluzbenik
         private void PopuniProfesore(ErsteModel ersteModel)
         {
             var list = ersteModel.profesori
-                .Where(e => e.grupe.Any(g => g.Id == grupa.Id))
+                .Where(e => e.osoba.Vazeci && e.grupe.Any(g => g.Vazeca && g.Id == grupa.Id))
                 .ToList();
             list.Sort((a, b) =>
             {
@@ -146,7 +146,7 @@ namespace Erste.Sluzbenik
         private void PopuniPolaznike(ErsteModel ersteModel)
         {
             var list = ersteModel.polaznici
-                .Where(e => e.grupe.Any(g => g.Id == grupa.Id))
+                .Where(e => e.osoba.Vazeci && e.grupe.Any(g => g.Vazeca && g.Id == grupa.Id))
                 .ToList();
             list.Sort((a, b) =>
             {
@@ -171,7 +171,7 @@ namespace Erste.Sluzbenik
         private void PopuniTermine(ErsteModel ersteModel)
         {
             var list = ersteModel.termini
-                .Where(e => e.GrupaId == grupa.Id)
+                .Where(e => e.Vazeci && e.grupa.Vazeca && e.GrupaId == grupa.Id)
                 .ToList();
             var newList = list.Select(e => new PrikazVremena(e.Dan, e.Od, e.Do, e)).ToList();
             newList.Sort((a, b) =>
@@ -235,7 +235,7 @@ namespace Erste.Sluzbenik
                     if (e.AddedItems.Count > 0)
                     {
                         string text = e.AddedItems[0].ToString();
-                        grupa = ersteModel.grupe.First(g => g.Naziv == text);
+                        grupa = ersteModel.grupe.First(g => g.Vazeca && g.Naziv == text);
                     }
                 }
                 Init();
@@ -268,8 +268,8 @@ namespace Erste.Sluzbenik
                         string ime = p[0];
                         string prezime = p[1];
                         string email = p[2];
-                        profesor profesor = ersteModel.profesori.First(g => g.osoba.Ime == ime && g.osoba.Prezime == prezime && g.osoba.Email == email);
-                        grupa grupica = ersteModel.grupe.Where(gr => gr.Id == grupa.Id).ToList().First();
+                        profesor profesor = ersteModel.profesori.Where(prof => prof.osoba.Vazeci).First(prof => prof.osoba.Ime == ime && prof.osoba.Prezime == prezime && prof.osoba.Email == email);
+                        grupa grupica = ersteModel.grupe.Where(gr => gr.Vazeca && gr.Id == grupa.Id).ToList().First();
                         grupica.profesori.Add(profesor);
                         profesor.grupe.Add(grupica);
                         ersteModel.SaveChanges();
@@ -310,8 +310,8 @@ namespace Erste.Sluzbenik
                         int min1 = p.Item3;
                         int sat2 = p.Item4;
                         int min2 = p.Item5;
-                        termin termin = ersteModel.termini.First(t => t.Dan == dan && t.Od.Hours == sat1 && t.Od.Minutes == min1 && t.Do.Hours == sat2 && t.Do.Minutes == min2);
-                        grupa grupica = ersteModel.grupe.Where(gr => gr.Id == grupa.Id).ToList().First();
+                        termin termin = ersteModel.termini.First(t => t.Vazeci && t.Dan == dan && t.Od.Hours == sat1 && t.Od.Minutes == min1 && t.Do.Hours == sat2 && t.Do.Minutes == min2);
+                        grupa grupica = ersteModel.grupe.Where(gr => gr.Vazeca && gr.Id == grupa.Id).ToList().First();
                         grupica.termini.Add(termin);
                         termin.grupa = grupica;
                         ersteModel.SaveChanges();
@@ -350,14 +350,14 @@ namespace Erste.Sluzbenik
                         string ime = p[0];
                         string prezime = p[1];
                         string email = p[2];
-                        polaznik polaznik = ersteModel.polaznici.First(g => g.osoba.Ime == ime && g.osoba.Prezime == prezime && g.osoba.Email == email);
-                        grupa grupica = ersteModel.grupe.Where(gr => gr.Id == grupa.Id).ToList().First();
+                        polaznik polaznik = ersteModel.polaznici.First(g => g.osoba.Vazeci && g.osoba.Ime == ime && g.osoba.Prezime == prezime && g.osoba.Email == email);
+                        grupa grupica = ersteModel.grupe.Where(gr => gr.Vazeca && gr.Id == grupa.Id).ToList().First();
                         grupica.polaznici.Add(polaznik);
                         polaznik.grupe.Add(grupica);
                         string odabraniNivo = NivoKursa.Text;
                         string odabraniJezik = jezikKursa.Text;
                         polaznik_na_cekanju p_na_c = polaznik.polaznik_na_cekanju;
-                        kurs kurs_za_p_na_c = p_na_c.kursevi.First(k => k.Nivo == odabraniNivo && k.jezik.Naziv == odabraniJezik);
+                        kurs kurs_za_p_na_c = p_na_c.kursevi.First(k =>  k.Vazeci && k.Nivo == odabraniNivo && k.jezik.Vazeci && k.jezik.Naziv == odabraniJezik);
                         kurs_za_p_na_c.polaznici_na_cekanju.Remove(p_na_c);
                         p_na_c.kursevi.Remove(kurs_za_p_na_c);
                         p_na_c.polaznik.polaznik_na_cekanju = null;
@@ -374,7 +374,7 @@ namespace Erste.Sluzbenik
             PrikazVremena prikazVremena = (PrikazVremena)((Button)e.Source).DataContext;
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                termin st = ersteModel.termini.First(t => prikazVremena.Dan == t.Dan &&
+                termin st = ersteModel.termini.First(t => t.Vazeci && prikazVremena.Dan == t.Dan &&
                                                          prikazVremena.Od == t.Od &&
                                                          prikazVremena.Do == t.Do);
                 st.GrupaId = null;
@@ -388,8 +388,8 @@ namespace Erste.Sluzbenik
             profesor profa = (profesor)((Button)e.Source).DataContext;
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                grupa st = ersteModel.grupe.First(g => g.Id == grupa.Id);
-                profesor profesor = ersteModel.profesori.Find(profa.Id);
+                grupa st = ersteModel.grupe.First(g => g.Vazeca && g.Id == grupa.Id);
+                profesor profesor = ersteModel.profesori.Where(pr => pr.osoba.Vazeci && pr.Id==profa.Id).First();
                 st.profesori.Remove(profesor);
                 ersteModel.SaveChanges();
             }
@@ -405,10 +405,10 @@ namespace Erste.Sluzbenik
                 string odabraniJezik = jezikKursa.Text;
                 polaznik p = ersteModel.polaznici.Find(polaznik.Id);
                 polaznik_na_cekanju p_na_c = p.polaznik_na_cekanju = new polaznik_na_cekanju() { Id = p.Id, kursevi = new List<kurs>(), polaznik = p };
-                kurs kurs_za_p_na_c = ersteModel.kursevi.ToList().First(k => k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
+                kurs kurs_za_p_na_c = ersteModel.kursevi.ToList().First(k => k.Vazeci && k.jezik.Vazeci && k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
                 kurs_za_p_na_c.polaznici_na_cekanju.Add(p_na_c);
                 p_na_c.kursevi.Add(kurs_za_p_na_c);
-                grupa grupica = ersteModel.grupe.Find(grupa.Id);
+                grupa grupica = ersteModel.grupe.Where(g => g.Vazeca && g.Id==grupa.Id).First();
                 p.grupe.Remove(grupica);
                 grupica.polaznici.Remove(p);
                 ersteModel.SaveChanges();

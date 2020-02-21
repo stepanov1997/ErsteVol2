@@ -47,7 +47,7 @@ namespace Erste.Sluzbenik
                 using (ErsteModel ersteModel = new ErsteModel())
                 {
                     GrupaCombo.Items.Clear();
-                    foreach (var naziv in ersteModel.grupe.Select(e => e.Naziv).ToList())
+                    foreach (var naziv in ersteModel.grupe.Where(e => e.Vazeca).Select(e => e.Naziv).ToList())
                     {
                         GrupaCombo.Items.Add(naziv);
                     }
@@ -99,7 +99,7 @@ namespace Erste.Sluzbenik
 
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                termin termin = await ersteModel.termini.FindAsync(item.termin.Id);
+                termin termin = ersteModel.termini.First(t => t.Vazeci && t.Id== item.termin.Id);
                 if (termin != null)
                 {
                     termin.Dan = DanCombo.Text;
@@ -108,7 +108,7 @@ namespace Erste.Sluzbenik
                     if (TimePickerDo.Value != null)
                         termin.Do = TimePickerDo.Value.Value.TimeOfDay;
                     if(GrupaCombo.Text!="Nije dodijeljena grupa" && !string.IsNullOrWhiteSpace(GrupaCombo.Text))
-                        termin.GrupaId = (await ersteModel.grupe.FirstAsync(g => g.Naziv == GrupaCombo.Text)).Id;
+                        termin.GrupaId = (await ersteModel.grupe.FirstAsync(g => g.Vazeca && g.Naziv == GrupaCombo.Text)).Id;
                     await ersteModel.SaveChangesAsync();
                 }
             }
@@ -146,7 +146,7 @@ namespace Erste.Sluzbenik
             using (ErsteModel ersteModel = new ErsteModel())
             {
                 //grupa = await ersteModel.grupe.FirstAsync(g => g.termini!=null && g.profesori!=null && g.polaznici!=null && g.Naziv == NazivGrupe);
-                grupa = await ersteModel.grupe.FirstAsync(g => g.Naziv == NazivGrupe);
+                grupa = await ersteModel.grupe.FirstAsync(g => g.Vazeca && g.Naziv == NazivGrupe);
             }
 
             if (grupa != null && Dispatcher != null)

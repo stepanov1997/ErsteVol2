@@ -24,11 +24,11 @@ namespace Erste.Sluzbenik
         {
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                foreach (var naziv in ersteModel.jezici.Select(e => e.Naziv).ToList())
+                foreach (var naziv in ersteModel.jezici.Where(j => j.Vazeci).Select(e => e.Naziv).ToList())
                 {
                     JezikCombo.Items.Add(naziv);
                 }
-                foreach (var nivo in ersteModel.kursevi.Select(e => e.Nivo).Distinct().ToList())
+                foreach (var nivo in ersteModel.kursevi.Where(n => n.Vazeci).Select(e => e.Nivo).Distinct().ToList())
                 {
                     NivoKursaCombo.Items.Add(nivo);
                 }
@@ -45,7 +45,7 @@ namespace Erste.Sluzbenik
             }
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                if (await ersteModel.grupe.AnyAsync(g => g.Naziv == NazivBox.Text))
+                if (await ersteModel.grupe.Where(g => g.Vazeca).AnyAsync(g => g.Naziv == NazivBox.Text))
                 {
                     MessageBox.Show("Grupa sa unesenim nazivom već postoji.");
                     return;
@@ -90,7 +90,7 @@ namespace Erste.Sluzbenik
                         DatumDo = TimePickerDo.SelectedDate.Value,
                         kurs = new kurs()
                         {
-                            jezik = await ersteModel.jezici.FirstAsync(j => j.Naziv == JezikCombo.Text),
+                            jezik = await ersteModel.jezici.Where(j => j.Vazeci).FirstAsync(j => j.Naziv == JezikCombo.Text),
                             Nivo = NivoKursaCombo.Text,
                             Vazeci = true
                         },
