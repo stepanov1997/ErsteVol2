@@ -43,6 +43,7 @@ namespace Erste.Sluzbenik
 
         private void btn_PrikaziGrupe_Click(object sender, RoutedEventArgs e)
         {
+            GrupeDataGrid.Items.Clear();
             ResetBorderColors();
             int odabraniJezikInt = chb_Jezik.SelectedIndex;
             int odabraniNivoInt = chb_Nivo.SelectedIndex;
@@ -280,7 +281,14 @@ namespace Erste.Sluzbenik
             }
         }
 
-
+        private void chb_Nivo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.AddedItems.Count > 0)
+            {
+                chb_Nivo.SelectedItem = e.AddedItems[0];
+                btn_PrikaziGrupe_Click(null, null);
+            }
+        }
     }
 
     public class GrupaKursZapis

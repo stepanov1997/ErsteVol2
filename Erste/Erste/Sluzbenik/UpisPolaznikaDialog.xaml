@@ -55,14 +55,14 @@
                         <DataGridTextColumn Width="*" Header="Jezik" Binding="{Binding Path=Jezik.Naziv}"></DataGridTextColumn>
                         <DataGridTextColumn Width="*" Header="Nivo kursa" Binding="{Binding Path=Kurs.Nivo}"></DataGridTextColumn>
                         <DataGridTextColumn Width="*" Header="Broj clanova" Binding="{Binding Path=Grupa.BrojClanova}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="*" Header="Datum pocetka kursa" Binding="{Binding Path=Grupa.DatumOd}"></DataGridTextColumn>
-                        <DataGridTextColumn Width="*" Header="Datum završetka kursa" Binding="{Binding Path=Grupa.DatumDo}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Header="Datum pocetka kursa" Binding="{Binding Path=Grupa.DatumOd, StringFormat={}{0:dd-MM-yyyy}}"></DataGridTextColumn>
+                        <DataGridTextColumn Width="*" Header="Datum završetka kursa" Binding="{Binding Path=Grupa.DatumDo, StringFormat={}{0:dd-MM-yyyy}}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
             <TextBlock HorizontalAlignment="Left" x:Name="NapomenaBox" Visibility="Collapsed" Margin="37,27,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="38" Width="171"/>
             <ComboBox x:Name="chb_Jezik" Margin="110,226,0,0" VerticalAlignment="Top"  Height="22" SelectionChanged="Chb_Jezik_SelectionChanged"/>
-            <ComboBox x:Name="chb_Nivo" HorizontalAlignment="Left" Margin="110,262,0,0" Width="141" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Top"/>
+            <ComboBox x:Name="chb_Nivo" HorizontalAlignment="Left" Margin="110,262,0,0" Width="141" Grid.ColumnSpan="2" Height="20" VerticalAlignment="Top" SelectionChanged="chb_Nivo_SelectionChanged"/>
         </Grid>
     </Grid>
 </Window>
