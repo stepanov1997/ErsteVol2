@@ -40,9 +40,16 @@
         <Button x:Name="Button1" Grid.Column="0" Content="Zatvori prozor" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="Potvrdi_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Margin="427,470,391.667,0" Width="158" VerticalAlignment="Top"/>
         <DataGrid x:Name="TerminiTable" HorizontalAlignment="Left" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" Margin="40,275,0,0" Width="415" Height="160" VerticalAlignment="Top">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Dan" Binding="{Binding Dan}"/>
-                <DataGridTextColumn Width="*" Header="Početak termina" Binding="{Binding OdString}"/>
-                <DataGridTextColumn Width="*" Header="Kraj termina" Binding="{Binding DoString}"/>
+                <DataGridTextColumn Width="80*" Header="Dan" Binding="{Binding Dan}"/>
+                <DataGridTextColumn Width="100*" Header="Početak termina" Binding="{Binding OdString}"/>
+                <DataGridTextColumn Width="90*" Header="Kraj termina" Binding="{Binding DoString}"/>
+                <DataGridTemplateColumn Width="100*" Header="Oslobađanje" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="oslobadjanjeTerminaButton"  Content="Oslobodi termin" Click="OslobadjanjeTerminaButton_OnClick"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Border HorizontalAlignment="Left" Grid.RowSpan="1" Margin="620,35,0,0" Height="30" VerticalAlignment="Top" Width="205">
@@ -54,6 +61,13 @@
                 <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding osoba.Prezime}"/>
                 <DataGridTextColumn Width="*" Header="Email" Binding="{Binding osoba.Email}"/>
                 <DataGridTextColumn Width="*" Header="Broj telefona" Binding="{Binding osoba.BrojTelefona}"/>
+                <DataGridTemplateColumn Width="*" Header="Uklanjanje">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="oslobadjanjePosrednikaButton"  Content="Ukloni" Click="uklanjanjePolaznikaButton_OnClick"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid x:Name="ProfesoriTable" Margin="520,275,0,0" HorizontalAlignment="Left" Width="415" Height="160" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" VerticalAlignment="Top">
@@ -62,6 +76,13 @@
                 <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding osoba.Prezime}"/>
                 <DataGridTextColumn Width="*" Header="Email" Binding="{Binding osoba.Email}"/>
                 <DataGridTextColumn Width="*" Header="Broj telefona" Binding="{Binding osoba.BrojTelefona}"/>
+                <DataGridTemplateColumn Width="*" Header="Uklanjanje">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="oslobadjanjeProfesoraButton"  Content="Ukloni" Click="uklanjanjeProfesoraButton_OnClick"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Border HorizontalAlignment="Left" Grid.RowSpan="1" Margin="625,245,0,0" Height="30" VerticalAlignment="Top" Width="205">

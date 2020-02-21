@@ -63,7 +63,8 @@ namespace Erste.Sluzbenik
                         Od = @od,
                         Do = @do,
                         grupa = null,
-                        GrupaId = null
+                        GrupaId = null,
+                        Vazeci = true
                     });
                     await ersteModel.SaveChangesAsync();
                 }

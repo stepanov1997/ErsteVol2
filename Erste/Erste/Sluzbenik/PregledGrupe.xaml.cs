@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -46,9 +47,10 @@ namespace Erste.Sluzbenik
             using (ErsteModel ersteModel = new ErsteModel())
             {
                 BrojClanovaBox.Text = $"{ersteModel.polaznici.Count(e => e.grupe.Any(g => g.Id == grupa.Id))}";
-                kurs kurs = ersteModel.kursevi.Find(grupa.Id);
+                kurs kurs = ersteModel.kursevi.First(e => e.grupe.Any(p => p.Id == grupa.Id));
                 if (!(kurs is null))
                 {
+                    flag = false;
                     NazivGrupeCombo.Items.Clear();
                     NazivGrupeCombo.ItemsSource = null;
                     var grupe = ersteModel.grupe.Select(e => e.Naziv).ToList();
@@ -56,8 +58,6 @@ namespace Erste.Sluzbenik
                     {
                         NazivGrupeCombo.Items.Add(naziv);
                     }
-                    //NazivGrupeCombo.Text = $"{grupa.Naziv}";
-                    flag = false;
                     NazivGrupeCombo.SelectedIndex = grupe.IndexOf(grupa.Naziv);
                     flag = true;
                     NivoKursa.Text = $"{kurs.Nivo}";
@@ -76,7 +76,7 @@ namespace Erste.Sluzbenik
 
         private void PopuniTermineCombo(ErsteModel ersteModel)
         {
-            var termini = ersteModel.termini.Where(e => e.GrupaId != grupa.Id).ToList();
+            var termini = ersteModel.termini.Where(e => e.grupa == null).ToList();
             dodavanjeTermina.Items.Clear();
             foreach (var termin in termini)
             {
@@ -86,12 +86,15 @@ namespace Erste.Sluzbenik
 
         private void PopuniProfesoreCombo(ErsteModel ersteModel)
         {
+            //var profesori = ersteModel.profesori.Where(e => e.kursevi.Any(k => k.jezik.Naziv == jezikKursa.Text)).ToList();
             var profesori = ersteModel.profesori.ToList();
             foreach (profesor profesor in ProfesoriTable.Items)
             {
                 profesori.RemoveAll(e => e.Id == profesor.Id);
             }
+            flag = false;
             dodavanjeProfesora.Items.Clear();
+            flag = true;
             foreach (var profesor in profesori)
             {
                 dodavanjeProfesora.Items.Add($"{profesor.osoba.Ime} {profesor.osoba.Prezime} ({profesor.osoba.Email})");
@@ -100,15 +103,18 @@ namespace Erste.Sluzbenik
 
         private void PopuniPolaznikeCombo(ErsteModel ersteModel)
         {
-            var polaznici = ersteModel.polaznici.ToList();
-            foreach (polaznik polaznik in PolazniciTable.Items)
-            {
-                polaznici.RemoveAll(e => e.Id == polaznik.Id);
-            }
+            string odabraniNivo = NivoKursa.Text;
+            string odabraniJezik = jezikKursa.Text;
+            var polazniciNaCekanju = (from p_na_c in ersteModel.polaznici_na_cekanju
+                                      where p_na_c.kursevi.Any(k =>
+                                          k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik))
+                                      select p_na_c).ToList();
+
             dodavanjePolaznika.Items.Clear();
-            foreach (var polaznik in polaznici)
+            foreach (var polaznikNaCekanju in polazniciNaCekanju)
             {
-                dodavanjePolaznika.Items.Add($"{polaznik.osoba.Ime} {polaznik.osoba.Prezime} ({polaznik.osoba.Email})");
+                osoba osoba = polaznikNaCekanju.polaznik.osoba;
+                dodavanjePolaznika.Items.Add($"{osoba.Ime} {osoba.Prezime} ({osoba.Email})");
             }
         }
 
@@ -162,14 +168,7 @@ namespace Erste.Sluzbenik
             var list = ersteModel.termini
                 .Where(e => e.GrupaId == grupa.Id)
                 .ToList();
-            var newList = list.Select(e => new
-            {
-                Dan = e.Dan,
-                OdString = e.Od.ToString(@"hh\:mm"),
-                DoString = e.Do.ToString(@"hh\:mm"),
-                Od = e.Od,
-                Do = e.Do
-            }).ToList();
+            var newList = list.Select(e => new PrikazVremena(e.Dan, e.Od, e.Do, e)).ToList();
             newList.Sort((a, b) =>
             {
                 int first = GetRedniBroj(a.Dan);
@@ -185,8 +184,10 @@ namespace Erste.Sluzbenik
 
                 return 1;
             });
+            flag = false;
             TerminiTable.Items.Clear();
             TerminiTable.ItemsSource = null;
+            flag = true;
             foreach (var termin in newList)
             {
                 TerminiTable.Items.Add(termin);
@@ -230,11 +231,9 @@ namespace Erste.Sluzbenik
                     {
                         string text = e.AddedItems[0].ToString();
                         grupa = ersteModel.grupe.First(g => g.Naziv == text);
-                        Init();
-                        NazivGrupeCombo.Text = text;
                     }
                 }
-
+                Init();
             }
         }
 
@@ -269,30 +268,30 @@ namespace Erste.Sluzbenik
                         grupica.profesori.Add(profesor);
                         profesor.grupe.Add(grupica);
                         ersteModel.SaveChanges();
-                        Init();
-                        NazivGrupeCombo.Text = text;
                     }
                 }
-
+                Init();
+                
+                dodavanjeProfesora.Text = "Dodjeli profesora";
             }
         }
 
         private void DodavanjeTermina_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Func<string, (string,int,int,int,int)> parser = s =>
-            {
-                var splittedString = s.Split(' ');
-                string date = splittedString[1];
-                var niz = date.Substring(1, date.Length - 2).Split('-');
-                string[] ar1 = niz[0].Split(':');
-                string[] ar2 = niz[1].Split(':');
-                return (splittedString[0], 
-                        int.Parse(ar1[0]),
-                        int.Parse(ar1[1]),
-                        int.Parse(ar2[0]),
-                        int.Parse(ar2[1]));
+            Func<string, (string, int, int, int, int)> parser = s =>
+                {
+                    var splittedString = s.Split(' ');
+                    string date = splittedString[1];
+                    var niz = date.Substring(1, date.Length - 2).Split('-');
+                    string[] ar1 = niz[0].Split(':');
+                    string[] ar2 = niz[1].Split(':');
+                    return (splittedString[0],
+                            int.Parse(ar1[0]),
+                            int.Parse(ar1[1]),
+                            int.Parse(ar2[0]),
+                            int.Parse(ar2[1]));
 
-            };
+                };
             if (flag)
             {
                 using (ErsteModel ersteModel = new ErsteModel())
@@ -306,16 +305,16 @@ namespace Erste.Sluzbenik
                         int min1 = p.Item3;
                         int sat2 = p.Item4;
                         int min2 = p.Item5;
-                        termin termin = ersteModel.termini.First(t => t.Dan==dan && t.Od.Hours==sat1 && t.Od.Minutes == min1 && t.Do.Hours == sat2 && t.Do.Minutes == min2);
+                        termin termin = ersteModel.termini.First(t => t.Dan == dan && t.Od.Hours == sat1 && t.Od.Minutes == min1 && t.Do.Hours == sat2 && t.Do.Minutes == min2);
                         grupa grupica = ersteModel.grupe.Where(gr => gr.Id == grupa.Id).ToList().First();
                         grupica.termini.Add(termin);
                         termin.grupa = grupica;
                         ersteModel.SaveChanges();
-                        Init();
-                        NazivGrupeCombo.Text = text;
+                        
                     }
                 }
-
+                dodavanjeTermina.Text = "Dodjeli termin";
+                Init();
             }
 
         }
@@ -350,13 +349,87 @@ namespace Erste.Sluzbenik
                         grupa grupica = ersteModel.grupe.Where(gr => gr.Id == grupa.Id).ToList().First();
                         grupica.polaznici.Add(polaznik);
                         polaznik.grupe.Add(grupica);
+                        string odabraniNivo = NivoKursa.Text;
+                        string odabraniJezik = jezikKursa.Text;
+                        polaznik_na_cekanju p_na_c = polaznik.polaznik_na_cekanju;
+                        kurs kurs_za_p_na_c = p_na_c.kursevi.First(k => k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
+                        kurs_za_p_na_c.polaznici_na_cekanju.Remove(p_na_c);
+                        p_na_c.kursevi.Remove(kurs_za_p_na_c);
+                        p_na_c.polaznik.polaznik_na_cekanju = null;
                         ersteModel.SaveChanges();
-                        Init();
-                        NazivGrupeCombo.Text = text;
                     }
                 }
-
+                dodavanjePolaznika.Text = "Dodjeli polaznika";
+                Init();
             }
+        }
+
+        private void OslobadjanjeTerminaButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            PrikazVremena prikazVremena = (PrikazVremena)((Button)e.Source).DataContext;
+            using (ErsteModel ersteModel = new ErsteModel())
+            {
+                termin st = ersteModel.termini.First(t => prikazVremena.Dan == t.Dan &&
+                                                         prikazVremena.Od == t.Od &&
+                                                         prikazVremena.Do == t.Do);
+                st.GrupaId = null;
+                ersteModel.SaveChanges();
+            }
+            Init();
+        }
+
+        private void uklanjanjeProfesoraButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            profesor profa = (profesor)((Button)e.Source).DataContext;
+            using (ErsteModel ersteModel = new ErsteModel())
+            {
+                grupa st = ersteModel.grupe.First(g => g.Id == grupa.Id);
+                profesor profesor = ersteModel.profesori.Find(profa.Id);
+                st.profesori.Remove(profesor);
+                ersteModel.SaveChanges();
+            }
+            Init();
+        }
+
+        private void uklanjanjePolaznikaButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            polaznik polaznik = (polaznik)((Button)e.Source).DataContext;
+            using (ErsteModel ersteModel = new ErsteModel())
+            {
+                string odabraniNivo = NivoKursa.Text;
+                string odabraniJezik = jezikKursa.Text;
+                polaznik p = ersteModel.polaznici.Find(polaznik.Id);
+                polaznik_na_cekanju p_na_c = p.polaznik_na_cekanju = new polaznik_na_cekanju(){Id=p.Id, kursevi = new List<kurs>(), polaznik = p};
+                kurs kurs_za_p_na_c = ersteModel.kursevi.ToList().First(k =>  k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
+                kurs_za_p_na_c.polaznici_na_cekanju.Add(p_na_c);
+                p_na_c.kursevi.Add(kurs_za_p_na_c);
+                grupa grupica = ersteModel.grupe.Find(grupa.Id);
+                p.grupe.Remove(grupica);
+                grupica.polaznici.Remove(p);
+                ersteModel.SaveChanges();
+            }
+            Init();
+        }
+    }
+
+    class PrikazVremena
+    {
+        public string Dan { get; set; }
+        public string OdString { get; set; }
+        public string DoString { get; set; }
+        public TimeSpan Od { get; set; }
+        public TimeSpan Do { get; set; }
+
+        public termin Termin { get; set; }
+
+        public PrikazVremena(string dan, TimeSpan od, TimeSpan @do, termin termin)
+        {
+            termin = Termin;
+            Dan = dan;
+            OdString = od.ToString(@"hh\:mm");
+            DoString = @do.ToString(@"hh\:mm");
+            Od = od;
+            Do = @do;
         }
     }
 }

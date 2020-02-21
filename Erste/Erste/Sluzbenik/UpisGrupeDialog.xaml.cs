@@ -85,7 +85,8 @@ namespace Erste.Sluzbenik
                     Od = @od,
                     Do = @do,
                     grupa = Grupa,
-                    GrupaId = Grupa.Id
+                    GrupaId = Grupa.Id,
+                    Vazeci = true
                 };
                 ErsteModel.termini.Add(t);
                 Grupa.termini.Add(t);

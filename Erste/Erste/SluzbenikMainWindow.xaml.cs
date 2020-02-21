@@ -49,7 +49,7 @@ namespace Erste
         /*private static int[] _menuIndex = { 0, 0, 0 };
         private object _locker = new object();*/
 
-        private void Upis_Click(object sender, RoutedEventArgs e)
+        private async void Upis_Click(object sender, RoutedEventArgs e)
         {
             ClickOnFieldColor(upisButton);
 
@@ -57,6 +57,7 @@ namespace Erste
             upisPolaznikaDialog.ShowDialog();
 
             ShowLastView();
+            await kandidatiCekanje.Refresh();
         }
 
         private async void Raspored_Click(object sender, RoutedEventArgs e)
@@ -103,6 +104,7 @@ namespace Erste
                     kreiranjeKursa.ShowDialog();
                     ShowLastView();
                 });
+            await raspored.Refresh();
         }
 
         private void ShowLastView()
@@ -160,6 +162,8 @@ namespace Erste
                     pregledGrupe.ShowDialog();
                     ShowLastView();
                 });
+            if(raspored.Visibility == Visibility.Visible)
+                await raspored.Refresh();
         }
 
         private async void DodajNovuGrupu_OnClick(object sender, RoutedEventArgs e)

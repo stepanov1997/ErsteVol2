@@ -112,14 +112,15 @@ namespace Erste.Sluzbenik
                     {
                         kolone[i].ItemsSource = terminiPoDanima.ElementAt(i).OrderBy(e => e.vrijemeOd);
                         kolone[i].SelectionMode = SelectionMode.Single;
-                        kolone[i].MouseUp += (sender, args) =>
+                        kolone[i].MouseUp += async (sender, args) =>
                         {
                             if (((FrameworkElement)args.OriginalSource).DataContext is TimetableItem item)
                             {
                                 if (Dispatcher != null)
                                 {
-                                    Window pregledTermina = new PregledTermina(item, async () => await Refresh());
+                                    Window pregledTermina = new PregledTermina(item);
                                     pregledTermina.ShowDialog();
+                                    await Refresh();
                                 }
                             }
                         };

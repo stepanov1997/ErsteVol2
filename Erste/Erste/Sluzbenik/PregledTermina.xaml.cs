@@ -25,17 +25,15 @@ namespace Erste.Sluzbenik
     public partial class PregledTermina : Window
     {
         private TimetableItem item;
-        private readonly Action refresh;
 
         public PregledTermina()
         {
             InitializeComponent();
         }
 
-        public PregledTermina(TimetableItem item, Action refresh) : this()
+        public PregledTermina(TimetableItem item) : this()
         {
             this.item = item;
-            this.refresh = refresh;
             Init();
         }
 
@@ -115,7 +113,6 @@ namespace Erste.Sluzbenik
                 }
             }
             Close();
-            refresh();
         }
 
         private void Button_Otkazi_Click(object sender, RoutedEventArgs e)

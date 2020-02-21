@@ -91,8 +91,10 @@ namespace Erste.Sluzbenik
                         kurs = new kurs()
                         {
                             jezik = await ersteModel.jezici.FirstAsync(j => j.Naziv == JezikCombo.Text),
-                            Nivo = NivoKursaCombo.Text
-                        }
+                            Nivo = NivoKursaCombo.Text,
+                            Vazeci = true
+                        },
+                        Vazeca = true
                     });
                     await ersteModel.SaveChangesAsync();
                 }
