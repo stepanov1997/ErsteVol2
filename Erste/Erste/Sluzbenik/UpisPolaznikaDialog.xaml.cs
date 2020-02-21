@@ -251,7 +251,7 @@ namespace Erste.Sluzbenik
                     ersteModel.Dispose();
                 }
             }
-
+            btn_PrikaziGrupe_Click(null,null);
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
@@ -261,6 +261,7 @@ namespace Erste.Sluzbenik
 
         private void DataGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
+            e.Cancel = true;
         }
 
         private void Chb_Jezik_SelectionChanged(object sender, SelectionChangedEventArgs e)

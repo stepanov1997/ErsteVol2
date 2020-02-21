@@ -69,6 +69,10 @@ namespace Erste.Sluzbenik
 
         }
 
+        private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = true;
+        }
     }
 
     public class PolaznikNaCekanjuKurs
