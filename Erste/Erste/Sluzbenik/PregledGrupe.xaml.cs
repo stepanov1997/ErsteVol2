@@ -64,6 +64,8 @@ namespace Erste.Sluzbenik
                     jezik jezik = ersteModel.jezici.Find(kurs.JezikId);
                     if (!(jezik is null))
                         jezikKursa.Text = $"{jezik.Naziv}";
+                    datumOd.Text = grupa.DatumOd.ToString("dd.MM.yyyy");
+                    datumDo.Text = grupa.DatumDo.ToString("dd.MM.yyyy");
                 }
                 PopuniTermine(ersteModel);
                 PopuniPolaznike(ersteModel);
