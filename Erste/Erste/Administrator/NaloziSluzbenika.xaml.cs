@@ -24,7 +24,7 @@ namespace Erste.Administrator
         {
             InitializeComponent();
         }
-
+        /*
         public void AddButtonActions(params Button[] buttons)
         {
             buttons[0].Click += (sender, args) =>
@@ -52,6 +52,7 @@ namespace Erste.Administrator
                 Load_Data();
             };
         }
+        */
 
         public void Refresh() => Load_Data();
 
@@ -64,8 +65,9 @@ namespace Erste.Administrator
             {
                 using (var ersteModel = new ErsteModel())
                 {
-                    var sluzbenici = (from sluzbenik in ersteModel.sluzbenici.Include("osoba")
-                                      join osoba in ersteModel.osobe.Include("sluzbenik") on sluzbenik.Id equals osoba.Id
+                    var sluzbenici = (from sluzbenik in ersteModel.sluzbenici
+                                      join osoba in ersteModel.osobe on sluzbenik.Id equals osoba.Id
+                                      where osoba.Vazeci == true
                                       select sluzbenik).ToList();
 
                     foreach(var sluzbenik in sluzbenici)
@@ -79,7 +81,7 @@ namespace Erste.Administrator
             }
             catch (Exception ex)
             {
-                MessageBox.Show("MySQL Exception: " + ex.ToString());
+                MessageBox.Show("Greška");
             }
         }
 

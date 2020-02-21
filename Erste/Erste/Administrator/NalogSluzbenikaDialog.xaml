@@ -27,7 +27,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="791*"/>
             </Grid.ColumnDefinitions>
-            <Button Name="Button1" Content="Uredu" Click="Button1_Click" Margin="96,372,0,0" Style="{DynamicResource buttonStyle}" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="101"/>
+            <Button Name="Button1" Content="U redu" Click="Button1_Click" Margin="96,372,0,0" Style="{DynamicResource buttonStyle}" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="101"/>
             <Label VerticalAlignment="Top" Height="26" Margin="135,65,0,0" Content="Ime:" HorizontalAlignment="Left" Width="37"/>
             <Label VerticalAlignment="Top" Height="26" Margin="113,106,0,0" Content="Prezime:" HorizontalAlignment="Left" Width="60"/>
             <Label VerticalAlignment="Top" Height="26" Margin="126,147,0,0" Content="Email:" HorizontalAlignment="Left" Width="49"/>

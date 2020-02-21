@@ -77,7 +77,7 @@ namespace Erste.Administrator
             }
             catch (Exception ex)
             {
-                MessageBox.Show("MySQL Exception: " + ex.ToString());
+                MessageBox.Show("Greška");
             }
         }
 

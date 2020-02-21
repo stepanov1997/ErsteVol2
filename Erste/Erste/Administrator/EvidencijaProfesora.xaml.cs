@@ -72,7 +72,7 @@ namespace Erste.Administrator
 
                     foreach (var profesor in profesori)
                     {
-                        if (profesor.osoba != null)
+                        if (profesor.osoba != null && profesor.kursevi != null && profesor.kursevi.All(kurs => kurs.jezik != null))
                         {
                             DataGrid.Items.Add(profesor);
                         }
@@ -81,7 +81,7 @@ namespace Erste.Administrator
             }
             catch (Exception ex)
             {
-                MessageBox.Show("MySQL Exception: " + ex.ToString());
+                MessageBox.Show("Greška");
             }
         }
 

@@ -7,17 +7,15 @@
         xmlns:local="clr-namespace:Erste"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindow" x:Class="Erste.AdminMainWindow"
         mc:Ignorable="d"
-        Title="Erste" Height="505" Width="833" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowStartupLocation="CenterScreen">
+        Title="Erste" Height="511" Width="833" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" WindowStartupLocation="CenterScreen">
 
     <Grid Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="361*"/>
-        </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="185*" MinWidth="160"/>
             <ColumnDefinition Width="608*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Background="#FF6DCEF9" UseLayoutRounding="False" Margin="0,0,0,1">
+        <StackPanel Background="#FF6DCEF9" UseLayoutRounding="False">
             <Image x:Name="image" Height="60" Margin="0" Source="Resources/erste_logo.jpg" VerticalAlignment="Top" Stretch="Fill"/>
             <Label x:Name="label" Height="31" Margin="0" Content="Službenici" FontSize="14" FontFamily="Rockwell" Foreground="#FFEF3D4A" FontWeight="Bold" Padding="8,8,5,5"></Label>
             <Button x:Name="prikaziSluzbenikeButton" Click="Button_NaloziSluzbenika" Style="{DynamicResource buttonStyle}" Content="Prikaži službenike" HorizontalContentAlignment="Left" />
@@ -29,8 +27,8 @@
             <Button x:Name="prikaziKurseveButton" Click="Button_EvidencijaKurseva" Style="{DynamicResource buttonStyle}" Content="Prikaži kurseve" HorizontalContentAlignment="Left" />
             <Button x:Name="dodajKursButton" Click="Button_DodajKurs" Style="{DynamicResource buttonStyle}" Content="Dodaj kurs" HorizontalContentAlignment="Left" />
             <Label Height="40"></Label>
-            <Button x:Name="odjavaButton" Style="{DynamicResource buttonStyle}" Content="Odjava" HorizontalContentAlignment="Left" Click="LogOff_Click" Height="35" Margin="0,0,-0.333,0" />
-            <Button x:Name="button6" Style="{DynamicResource buttonStyle}" Content="Izlaz" HorizontalContentAlignment="Left" Click="Exit_Click" Height="40" VerticalAlignment="Bottom" Margin="0,0,-0.333,0" />
+            <Button x:Name="odjavaButton" Style="{DynamicResource buttonStyle}" Content="Odjava" HorizontalContentAlignment="Left" Click="LogOff_Click" VerticalAlignment="Bottom"/>
+            <Button x:Name="button6" Style="{DynamicResource buttonStyle}" Content="Izlaz" HorizontalContentAlignment="Left" Click="Exit_Click" VerticalAlignment="Bottom"/>
         </StackPanel>
         <Grid x:Name="GridZaPrikaz" Grid.Column="1">
         </Grid>

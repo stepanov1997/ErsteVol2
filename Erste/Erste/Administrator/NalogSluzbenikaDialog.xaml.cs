@@ -23,7 +23,7 @@ namespace Erste.Administrator
 
         private sluzbenik sluzbenik = null;
         private Boolean izmjena = false;
-        private const string uredu = "Uredu";
+        private const string uredu = "U redu";
         private const string otkazi = "Otkaži";
         private const string izmijeni = "Izmijeni";
         private const string obrisi = "Obriši";
@@ -103,7 +103,7 @@ namespace Erste.Administrator
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("MySQL Exception: " + ex.ToString());
+                            MessageBox.Show("Greška");
                         }
                     }
                     else
@@ -136,6 +136,7 @@ namespace Erste.Administrator
                     sluzbenik.osoba.Prezime = textBox_Prezime.Text;
                     sluzbenik.osoba.Email = textBox_Email.Text;
                     sluzbenik.osoba.BrojTelefona = textBox_BrojTelefona.Text;
+                    sluzbenik.osoba.Vazeci = true;
                     sluzbenik.KorisnickoIme = textBox_KorisnickoIme.Text;
 
                     HashGenerator hashGenerator = new HashGenerator();
@@ -152,7 +153,7 @@ namespace Erste.Administrator
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("MySQL Exception: " + ex.ToString());
+                        MessageBox.Show("Greška");
                     }
                 }
                 else
@@ -206,7 +207,7 @@ namespace Erste.Administrator
                     sluzbenik sluzbenik_remove = ersteModel.sluzbenici.Find(sluzbenik.Id);
                     if (sluzbenik_remove.osoba != null)
                     {
-                        ersteModel.osobe.Remove(sluzbenik_remove.osoba);
+                        sluzbenik_remove.osoba.Vazeci = false;
                         ersteModel.SaveChanges();
                     }
                 }
@@ -215,7 +216,7 @@ namespace Erste.Administrator
             }
             catch (Exception ex)
             {
-                MessageBox.Show("MySQL Exception: " + ex.ToString());
+                MessageBox.Show("Greška");
             }
         }
     }

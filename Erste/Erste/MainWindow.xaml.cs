@@ -184,7 +184,7 @@ namespace Erste
                 using (ErsteModel context = new ErsteModel())
                 {
                     var administators =
-                        await (from a in context.administratori where a.KorisnickoIme.Equals(username) select a)
+                        await (from a in context.administratori where a.KorisnickoIme.Equals(username) && a.osoba.Vazeci == true select a)
                             .ToListAsync();
                     if (administators.Count != 0 && hash.Equals(administators[0].LozinkaHash))
                     {
@@ -212,7 +212,7 @@ namespace Erste
                         return;
                     }
 
-                    var employees = await (from a in context.sluzbenici where a.KorisnickoIme.Equals(username) select a)
+                    var employees = await (from a in context.sluzbenici where a.KorisnickoIme.Equals(username) && a.osoba.Vazeci == true select a)
                         .ToListAsync();
                     if (employees.Count != 0 && hash.Equals(employees[0].LozinkaHash))
                     {

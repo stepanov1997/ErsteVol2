@@ -51,7 +51,7 @@ namespace Erste.Administrator
             }
             catch (Exception ex)
             {
-                MessageBox.Show("MySQL Exception: " + ex.ToString());
+                MessageBox.Show("Greška");
             }
 
             this.kurs = kurs;
@@ -100,7 +100,7 @@ namespace Erste.Administrator
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Greška. Pokušajte ponovo kasnije.");
+                            MessageBox.Show("Greška");
                         }
                     }
                     else
@@ -135,7 +135,7 @@ namespace Erste.Administrator
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Greška. Pokušajte ponovo kasnije.");
+                        MessageBox.Show("Greška");
                     }
                 }
                 else
@@ -193,7 +193,7 @@ namespace Erste.Administrator
             }
             catch (Exception ex)
             {
-                MessageBox.Show("MySQL Exception: " + ex.ToString());
+                MessageBox.Show("Greška");
             }
         }
     }
