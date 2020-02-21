@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Erste"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Name="MainWindow" x:Class="Erste.SluzbenikMainWindow"
        mc:Ignorable="d"
-        Title="Erste" WindowStartupLocation="CenterScreen" Height="650" Width="830" MinHeight="540" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        Title="Erste" WindowStartupLocation="CenterScreen" Height="650" Width="1000" MinHeight="540" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
 
     <Grid Background="GhostWhite" ScrollViewer.VerticalScrollBarVisibility="Auto">
         <Grid.RowDefinitions>
