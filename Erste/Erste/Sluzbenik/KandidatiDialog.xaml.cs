@@ -140,17 +140,10 @@ namespace Erste.Sluzbenik
                 using (var ersteModel = new ErsteModel())
                 {
                     polaznik polaznikRemove = ersteModel.polaznici.Where(p => p.Id == polaznik.Id).First();
-                    polaznik.osoba.Vazeci = false;
-                    Console.WriteLine(polaznikRemove.osoba.Id + " " + polaznikRemove.osoba.Ime + " " + polaznikRemove.osoba.Prezime + " " + polaznikRemove.osoba.Vazeci);
+                    polaznikRemove.osoba.Vazeci = false;
                     ersteModel.SaveChanges();
 
                 }
-                //using (var ersteModel = new ErsteModel())
-                //{
-                //    polaznik polaznikRemove = ersteModel.polaznici.Where(p => p.Id == polaznik.Id).First();
-                //    Console.WriteLine(polaznikRemove.osoba.Id + " " + polaznikRemove.osoba.Ime + " "
-                //        + polaznikRemove.osoba.Prezime + " " + polaznikRemove.osoba.Vazeci);
-                //}
                 Close();
             }
             catch (Exception ex)
