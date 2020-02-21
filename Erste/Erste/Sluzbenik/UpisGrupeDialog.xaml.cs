@@ -102,6 +102,7 @@ namespace Erste.Sluzbenik
                     Do = @do,
                     grupa = Grupa,
                     GrupaId = Grupa.Id,
+                    Vazeci = true
                 };
 
                 Grupa.DatumOd = DatePickerOd.SelectedDate.Value;

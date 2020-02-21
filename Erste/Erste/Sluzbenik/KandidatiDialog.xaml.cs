@@ -71,49 +71,24 @@ namespace Erste.Sluzbenik
                     !string.IsNullOrEmpty(textBox_Email.Text) &&
                     !string.IsNullOrEmpty(textBox_BrojTelefona.Text))
                 {
-                    if (polaznik != null)
-                    {
-                        try
-                        {
-                            using (var ersteModel = new ErsteModel())
-                            {
-                                polaznik = ersteModel.polaznici.Find(polaznik.Id) ?? new polaznik();
-                                polaznik.osoba.Ime = textBox_Ime.Text;
-                                polaznik.osoba.Prezime = textBox_Prezime.Text;
-                                polaznik.osoba.Email = textBox_Email.Text;
-                                polaznik.osoba.BrojTelefona = textBox_BrojTelefona.Text;
+                    try
 
-                                // dodati još šta ima polaznik
-                                ersteModel.SaveChanges();
-                            }
-                        }
-                        catch (Exception ex)
+                    {
+                        using (var ersteModel = new ErsteModel())
                         {
-                            MessageBox.Show("MySQL Exception: " + ex.ToString());
+                            polaznik = ersteModel.polaznici.Find(polaznik.Id);
+                            polaznik.osoba.Ime = textBox_Ime.Text;
+                            polaznik.osoba.Prezime = textBox_Prezime.Text;
+                            polaznik.osoba.Email = textBox_Email.Text;
+                            polaznik.osoba.BrojTelefona = textBox_BrojTelefona.Text;
+
+                            // dodati još šta ima polaznik
+                            ersteModel.SaveChanges();
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        polaznik polaznik = new polaznik();
-                        polaznik.osoba = new osoba();
-                        polaznik.osoba.Ime = textBox_Ime.Text;
-                        polaznik.osoba.Prezime = textBox_Prezime.Text;
-                        polaznik.osoba.Email = textBox_Email.Text;
-                        polaznik.osoba.BrojTelefona = textBox_BrojTelefona.Text;
-                        polaznik.osoba.Vazeci = true;
-
-                        try
-                        {
-                            using (var ersteModel = new ErsteModel())
-                            {
-                                ersteModel.polaznici.Add(polaznik);
-                                ersteModel.SaveChanges();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("MySQL Exception: " + ex.ToString());
-                        }
+                        MessageBox.Show("MySQL Exception: " + ex.ToString());
                     }
                     Close();
                 }
@@ -164,12 +139,18 @@ namespace Erste.Sluzbenik
             {
                 using (var ersteModel = new ErsteModel())
                 {
-                    polaznik polaznikRemove = ersteModel.polaznici.Find(polaznik.Id);
-                    if (polaznikRemove?.osoba != null)
-                    {
-                        polaznik.osoba.Vazeci = false;
-                    }
+                    polaznik polaznikRemove = ersteModel.polaznici.Where(p => p.Id == polaznik.Id).First();
+                    polaznik.osoba.Vazeci = false;
+                    Console.WriteLine(polaznikRemove.osoba.Id + " " + polaznikRemove.osoba.Ime + " " + polaznikRemove.osoba.Prezime + " " + polaznikRemove.osoba.Vazeci);
+                    ersteModel.SaveChanges();
+
                 }
+                //using (var ersteModel = new ErsteModel())
+                //{
+                //    polaznik polaznikRemove = ersteModel.polaznici.Where(p => p.Id == polaznik.Id).First();
+                //    Console.WriteLine(polaznikRemove.osoba.Id + " " + polaznikRemove.osoba.Ime + " "
+                //        + polaznikRemove.osoba.Prezime + " " + polaznikRemove.osoba.Vazeci);
+                //}
                 Close();
             }
             catch (Exception ex)
