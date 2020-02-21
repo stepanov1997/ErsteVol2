@@ -42,21 +42,20 @@ namespace Erste.Sluzbenik
             {
                 using (var ersteModel = new ErsteModel())
                 {
-                    var osobeKojeCekaju = (from o in ersteModel.osobe
-                        join pnc in ersteModel.polaznici_na_cekanju on o.Id equals pnc.Id
-                        select new
-                        {
-                            Id = o.Id,
-                            Ime = o.Ime,
-                            Prezime = o.Prezime,
-                            BrojTelefon = o.BrojTelefona,
-                            Email = o.Email
-
-                        }).ToList();
-
-                    foreach (var o in osobeKojeCekaju)
+                    var polazniciNaCekanju = ersteModel.polaznici_na_cekanju.Where(pnc => pnc.polaznik.osoba.Vazeci).ToList();
+                    foreach (var polaznikNaCekanju in polazniciNaCekanju)
                     {
-                        await Dispatcher.InvokeAsync(() => { DataGrid.Items.Add(o); });
+                        var kursevi = polaznikNaCekanju.kursevi.Where(k => k.Vazeci && k.jezik.Vazeci).ToList();
+                        foreach (var k in kursevi)
+                        {
+                            PolaznikNaCekanjuKurs pnck = new PolaznikNaCekanjuKurs
+                            {
+                                Osoba = polaznikNaCekanju.polaznik.osoba,
+                                Kurs = k,
+                                Jezik = k.jezik
+                            };
+                            await Dispatcher.InvokeAsync(() => { DataGrid.Items.Add(pnck); });
+                        }
                     }
                 }
             }
@@ -66,21 +65,17 @@ namespace Erste.Sluzbenik
                 {
                     MessageBox.Show("MySQL Exception: " + ex);
                 }
-}
+            }
 
         }
 
-        private async void DataGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
-        {
-            //if (Dispatcher != null)
-            //    await Dispatcher.InvokeAsync(() =>
-            //    {
-            //        polaznik polaznik = DataGrid.SelectedItem as polaznik;
-            //        KandidatiDialog kandidatiDialog = new KandidatiDialog(polaznik);
-            //        kandidatiDialog.ShowDialog();
-            //    });
-            //await Refresh();
-            //e.Cancel = true;
-        }
     }
+
+    public class PolaznikNaCekanjuKurs
+    {
+        public osoba Osoba { set; get; }
+        public kurs Kurs { set; get; }
+        public jezik Jezik { set; get; }
+    }
+
 }

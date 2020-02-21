@@ -15,7 +15,7 @@ namespace Erste
     public partial class SluzbenikMainWindow : Window
     {
         private Kandidati kandidatiSvi = new Kandidati("svi");
-        private Kandidati kandidatiCekanje = new Kandidati("cekanje");
+        private KandidatiNaCekanju kandidatiCekanje = new KandidatiNaCekanju();
         private Raspored raspored = new Raspored();
         public SluzbenikMainWindow()
         {

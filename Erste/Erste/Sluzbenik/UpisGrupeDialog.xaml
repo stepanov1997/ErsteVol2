@@ -6,8 +6,8 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Erste.Sluzbenik"
         mc:Ignorable="d"
-        Title="Erste" Height="450.022" Width="400.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="Erste" Height="519.152" Width="400.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,-4">
         <Label VerticalAlignment="Bottom"  Margin="84,0,0,193" Height="26" Content="Dan:" HorizontalAlignment="Left" Width="43" />
         <ComboBox x:Name="DanCombo" Margin="152,0,0,192.667" Height="22" ToolTip="Unesite dan kad će se održavati termin." HorizontalAlignment="Left" Width="159" VerticalAlignment="Bottom">
             <ComboBox.Items>
@@ -29,8 +29,24 @@
         <Label x:Name="label" Content="Podaci o terminu" Margin="106,0,89,241" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
         <xctk:TimePicker x:Name="TimePickerOd" Value="{Binding CurrentDateTime}" Margin="152,0,0,154.667" HorizontalAlignment="Left" Width="160" Height="20" VerticalAlignment="Bottom"/>
         <xctk:TimePicker x:Name="TimePickerDo" Value="{Binding CurrentDateTime}" Margin="152,0,0,114.667" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160"/>
-        <Label x:Name="label1" Content="Podaci o grupi" Margin="106,0,89,373" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
-        <Label VerticalAlignment="Bottom"  Margin="62,0,0,309" Height="26" Content="Naziv grupe:" HorizontalAlignment="Left" Width="86" />
-        <TextBox x:Name="textBox_NazivGrupe" HorizontalAlignment="Left" Height="23" Margin="177,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="159" TextChanged="TextBox_TextChanged"/>
+        <Label x:Name="label1" Content="Podaci o grupi" Margin="106,0,89,446" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
+        <Label VerticalAlignment="Bottom"  Margin="61,0,0,397" Height="26" Content="Naziv grupe:" HorizontalAlignment="Left" Width="86" />
+        <TextBox x:Name="textBox_NazivGrupe" HorizontalAlignment="Left" Height="23" Margin="172,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="159" TextChanged="TextBox_TextChanged"/>
+        <DatePicker x:Name="DatePickerOd" Margin="0,123,54,0" Width="165" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" FirstDayOfWeek="Monday">
+            <DatePicker.Resources>
+                <Style TargetType="DatePickerTextBox">
+                    <Setter Property="Text" Value="Izaberite datum"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <Label VerticalAlignment="Bottom"  Margin="61,0,0,349" Height="26" Content="DatumOd" HorizontalAlignment="Left" Width="86" />
+        <DatePicker x:Name="DatePickerDo" Margin="0,165,54,0" Width="165" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" FirstDayOfWeek="Monday">
+            <DatePicker.Resources>
+                <Style TargetType="{x:Type DatePickerTextBox}">
+                    <Setter Property="Text" Value="Izaberite datum"/>
+                </Style>
+            </DatePicker.Resources>
+        </DatePicker>
+        <Label VerticalAlignment="Bottom"  Margin="61,0,0,305" Height="26" Content="DatumDo" HorizontalAlignment="Left" Width="86" />
     </Grid>
 </Window>

@@ -24,7 +24,7 @@ namespace Erste.Sluzbenik
         public string NazivGrupe { set; get; }
         public ErsteModel ErsteModel { set; get; }
 
-        public UpisTerminaGrupe(grupa g,ErsteModel ersteModel)
+        public UpisTerminaGrupe(grupa g, ErsteModel ersteModel)
         {
             InitializeComponent();
             Grupa = g;
@@ -68,9 +68,25 @@ namespace Erste.Sluzbenik
                 TimePickerDo.BorderBrush = Brushes.Red;
                 return;
             }
+            if (DatePickerOd.SelectedDate is null)
+            {
+                MessageBox.Show("Odaberite početak kursa.");
+                return;
+            }
+            if (DatePickerDo.SelectedDate is null)
+            {
+                MessageBox.Show("Odaberite kraj kursa.");
+                return;
+            }
+            if (compare(DatePickerOd.SelectedDate, DatePickerDo.SelectedDate))
+            {
+                MessageBox.Show("Datum početka mora biti prije datuma završetka.");
+                return;
+            }
+
 
             try
-            { 
+            {
                 TimeSpan @od = new TimeSpan();
                 TimeSpan @do = new TimeSpan();
                 string dan = "";
@@ -86,8 +102,11 @@ namespace Erste.Sluzbenik
                     Do = @do,
                     grupa = Grupa,
                     GrupaId = Grupa.Id,
-                    Vazeci = true
                 };
+
+                Grupa.DatumOd = DatePickerOd.SelectedDate.Value;
+                Grupa.DatumDo = DatePickerDo.SelectedDate.Value;
+
                 ErsteModel.termini.Add(t);
                 Grupa.termini.Add(t);
                 Grupa.Naziv = textBox_NazivGrupe.Text;
@@ -103,7 +122,7 @@ namespace Erste.Sluzbenik
 
         private void ResetBorderColors()
         {
-          //  if(textBox_NazivGrupe)
+            //  if(textBox_NazivGrupe)
             textBox_NazivGrupe.ClearValue(Border.BorderBrushProperty);
             DanCombo.ClearValue(Border.BorderBrushProperty);
             DanCombo.ClearValue(Border.BorderBrushProperty);

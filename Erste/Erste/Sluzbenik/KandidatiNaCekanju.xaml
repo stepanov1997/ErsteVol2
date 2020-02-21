@@ -18,14 +18,14 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <DataGrid Name="DataGrid" Grid.ColumnSpan="3" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" BeginningEdit="DataGrid_OnBeginningEdit" VerticalGridLinesBrush="#FFB2B2B2" HorizontalGridLinesBrush="#FFB2B2B2" CellStyle="{StaticResource DataGridCellErsteStyle}">
+        <DataGrid Name="DataGrid" Grid.ColumnSpan="3" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}"  VerticalGridLinesBrush="#FFB2B2B2" HorizontalGridLinesBrush="#FFB2B2B2" CellStyle="{StaticResource DataGridCellErsteStyle}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding Path=osoba.Ime}"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding Path=osoba.Prezime}"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Email" Binding="{Binding Path=osoba.Email}"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Broj telefona" Binding="{Binding Path=osoba.BrojTelefona}"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Jezik" Binding="{Binding Path=Jezik}"></DataGridTextColumn>
-                <DataGridTextColumn Width="*" Header="Nivo kursa" Binding="{Binding Path=Nivo}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding Path=Osoba.Ime}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding Path=Osoba.Prezime}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Email" Binding="{Binding Path=Osoba.Email}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Broj telefona" Binding="{Binding Path=Osoba.BrojTelefona}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Jezik" Binding="{Binding Path=Jezik.Naziv}"></DataGridTextColumn>
+                <DataGridTextColumn Width="*" Header="Nivo kursa" Binding="{Binding Path=Kurs.Nivo}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">

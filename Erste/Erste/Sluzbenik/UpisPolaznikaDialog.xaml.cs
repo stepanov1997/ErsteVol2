@@ -24,6 +24,7 @@ namespace Erste.Sluzbenik
         public UpisPolaznikaDialog()
         {
             InitializeComponent();
+            chb_Nivo.IsEnabled = false;
             loadChb();
         }
 
@@ -32,15 +33,11 @@ namespace Erste.Sluzbenik
 
             using (var ersteModel = new ErsteModel())
             {
-                var jezici = (from j in ersteModel.jezici select j).Select(j => j.Naziv);
-                var nivoi = (from k in ersteModel.kursevi select k).Select(k => k.Nivo);
+                var jezici = (from j in ersteModel.jezici select j).Where(j => j.Vazeci).Select(j => j.Naziv);
 
-                 nivoi = nivoi.Distinct();
-
-               foreach(string naziv in jezici)
+                foreach (string naziv in jezici)
                     chb_Jezik.Items.Add(naziv);
-               foreach( string nivo in nivoi)
-                    chb_Nivo.Items.Add(nivo);
+
             }
         }
 
@@ -69,7 +66,8 @@ namespace Erste.Sluzbenik
                 chb_Jezik.BorderBrush = Brushes.Red;
                 return;
 
-            }else if (string.IsNullOrEmpty(odabraniNivo))
+            }
+            else if (string.IsNullOrEmpty(odabraniNivo))
             {
                 MessageBox.Show("Odaberite nivo kursa za prikaz grupa.");
                 chb_Nivo.BorderBrush = Brushes.Red;
@@ -79,15 +77,18 @@ namespace Erste.Sluzbenik
             using (var ersteModel = new ErsteModel())
             {
 
-                var kursGrupa = (from g in ersteModel.grupe join k in ersteModel.kursevi on g.KursId equals k.Id
-                             join j in ersteModel.jezici on k.JezikId equals j.Id
-                             where g.BrojClanova>=3 && g.DatumDo.CompareTo(DateTime.Now) > 0
-                             && j.Naziv.Equals(odabraniJezik) && k.Nivo.Equals(odabraniNivo)
-                             select new GrupaKursZapis {
-                                 Grupa = g,
-                                 Kurs = k,
-                                 Jezik = j 
-                             }).ToList();
+                var kursGrupa = (from g in ersteModel.grupe
+                                 join k in ersteModel.kursevi on g.KursId equals k.Id
+                                 join j in ersteModel.jezici on k.JezikId equals j.Id
+                                 where g.BrojClanova >= 1 && g.DatumDo.CompareTo(DateTime.Now) > 0
+                                 && j.Naziv.Equals(odabraniJezik) && k.Nivo.Equals(odabraniNivo)
+                                 && g.Vazeca && k.Vazeci && j.Vazeci
+                                 select new GrupaKursZapis
+                                 {
+                                     Grupa = g,
+                                     Kurs = k,
+                                     Jezik = j
+                                 }).ToList();
                 if (kursGrupa.Count == 0)
                 {
                     MessageBox.Show("Nema formiranih grupa.");
@@ -95,7 +96,7 @@ namespace Erste.Sluzbenik
                 }
                 foreach (var zapis in kursGrupa)
                 {
-                    if(!GrupeDataGrid.Items.Contains(zapis))
+                    if (!GrupeDataGrid.Items.Contains(zapis))
                         GrupeDataGrid.Items.Add(zapis);
                 }
 
@@ -114,7 +115,7 @@ namespace Erste.Sluzbenik
             chb_Nivo.ClearValue(Border.BorderBrushProperty);
         }
 
-        private  void Apply_Btn_Click(object sender, RoutedEventArgs e)
+        private void Apply_Btn_Click(object sender, RoutedEventArgs e)
         {
             ResetBorderColors();
 
@@ -160,10 +161,10 @@ namespace Erste.Sluzbenik
                 p.grupe.Add(zapisGrupa);
                 zapisGrupa.polaznici.Add(p);
 
-                MessageBox.Show("Uspjeno dodan polaznik.");
+                MessageBox.Show("Uspjesno dodan polaznik.");
                 ersteModel.SaveChanges();
                 ersteModel.Dispose();
-                
+
             }
             else
             {
@@ -171,21 +172,15 @@ namespace Erste.Sluzbenik
                 pnc.polaznik = p;
                 pnc.Id = p.Id;
 
-                // RAZMISLI O OVOME, KAKO MAPIRATI POLAZNIKE PO KURSEVIMA RAZLICITIH DATUMA
                 var kursLista = (from k in ersteModel.kursevi
                                  join j in ersteModel.jezici on k.JezikId equals j.Id
                                  where k.Nivo.Equals(odabraniNivo) && j.Naziv.Equals(odabraniJezik)
-                                     //&& g.DatumDo.CompareTo(DateTime.Now) > 0
-                                 //orderby k.DatumDo descending
+                                 && k.Vazeci && j.Vazeci
                                  select k).ToList();
 
                 kurs kurs = kursLista.First();
-                IEnumerable<polaznik_na_cekanju> polazniciNaCekanjuZaTrazeniKurs = kursLista.SelectMany(k => k.polaznici_na_cekanju).ToList();
-                //List<polaznik_na_cekanju> polazniciNaCekanjuZaTrazeniKurs = new List<polaznik_na_cekanju>();
-                //foreach (kurs k in kursLista)
-                //{
-                //    polazniciNaCekanjuZaTrazeniKurs.AddRange(k.polaznici_na_cekanju);
-                //}
+                IEnumerable<polaznik_na_cekanju> polazniciNaCekanjuZaTrazeniKurs = kursLista.SelectMany(k => k.polaznici_na_cekanju)
+                    .Where(pn => pn.polaznik.osoba.Vazeci).ToList();
 
                 if (polazniciNaCekanjuZaTrazeniKurs.Count() >= 2)
                 {
@@ -199,16 +194,16 @@ namespace Erste.Sluzbenik
                     ersteModel.SaveChanges();
 
                     //unos podataka o novoj grupi
-                    UpisTerminaGrupe upisTermina = new UpisTerminaGrupe(g,ersteModel);
+                    UpisTerminaGrupe upisTermina = new UpisTerminaGrupe(g, ersteModel);
                     upisTermina.ShowDialog();
                     if (g.Naziv == null)
                     {
                         Task.Run(() => MessageBox.Show("Unesite naziv grupe."));
-                        upisTermina = new UpisTerminaGrupe(g,ersteModel);
+                        upisTermina = new UpisTerminaGrupe(g, ersteModel);
                         upisTermina.ShowDialog();
                     }
 
-                    g = (from gr in ersteModel.grupe where gr.Id == g.Id select gr).First();
+                    g = (from gr in ersteModel.grupe where gr.Id == g.Id && g.Vazeca select gr).First();
 
                     //dobijanje ref na polaznike i polaznika na cekanju
                     List<polaznik> polazniciNoveGrupe = new List<polaznik>();
@@ -222,7 +217,7 @@ namespace Erste.Sluzbenik
                     foreach (polaznik_na_cekanju p_na_c in polazniciNaCekanjuZaTrazeniKurs)
                     {
                         kurs kurs_za_p_na_c = p_na_c.kursevi.First(k => k.Nivo.Equals(odabraniNivo) &&
-                            k.jezik.Naziv.Equals(odabraniJezik));
+                            k.jezik.Naziv.Equals(odabraniJezik) && k.Vazeci && k.jezik.Vazeci);
                         kurs_za_p_na_c.polaznici_na_cekanju.Remove(p_na_c);
                         p_na_c.kursevi.Remove(kurs_za_p_na_c);
                         p_na_c.polaznik.polaznik_na_cekanju = null;
@@ -265,40 +260,29 @@ namespace Erste.Sluzbenik
         {
         }
 
-        //private void Chb_Jezik_Selected(object sender, RoutedEventArgs e)
-        //{
-        //    string odabraniJezik = (string)chb_Jezik.SelectedItem;
-        //    string odabraniNivo = (string)chb_Nivo.SelectedItem;
+        private void Chb_Jezik_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string odabraniJezik = (string)chb_Jezik.SelectedItem;
+            using (var ersteModel = new ErsteModel())
+            {
+                chb_Nivo.IsEnabled = true;
+                chb_Nivo.Items.Clear();
+                var nivoi = (from k in ersteModel.kursevi
+                             join j in ersteModel.jezici on
+                             k.JezikId equals j.Id
+                             where j.Naziv.Equals(odabraniJezik) && k.Vazeci
+                             select k.Nivo).ToList();
+                var distNivoi = nivoi.Distinct();
+                foreach (var nivo in distNivoi)
+                    chb_Nivo.Items.Add(nivo);
+            }
+        }
 
-        //    if (string.IsNullOrEmpty(odabraniJezik) && string.IsNullOrWhiteSpace(odabraniNivo))
-        //    {
-        //        using (var ersteModel = new ErsteModel())
-        //        {
 
-        //            var kursGrupa = (from g in ersteModel.grupe
-        //                             join k in ersteModel.kursevi on g.KursId equals k.Id
-        //                             join j in ersteModel.jezici on k.JezikId equals j.Id
-        //                             where g.BrojClanova >= 3 && k.DatumDo.CompareTo(DateTime.Now) > 0
-        //                             && j.Naziv.Equals(odabraniJezik) && k.Nivo.Equals(odabraniNivo)
-        //                             select new GrupaKursZapis
-        //                             {
-        //                                 Grupa = g,
-        //                                 Kurs = k,
-        //                                 Jezik = j
-        //                             }).ToList();
-        //            foreach (var zapis in kursGrupa)
-        //            {
-        //                if (!GrupeDataGrid.Items.Contains(zapis))
-        //                    GrupeDataGrid.Items.Add(zapis);
-        //            }
-
-        //        }
-
-        //    }
-        //}
     }
 
-    public class GrupaKursZapis {
+    public class GrupaKursZapis
+    {
 
         public grupa Grupa { get; set; }
         public kurs Kurs { get; set; }

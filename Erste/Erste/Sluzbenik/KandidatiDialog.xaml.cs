@@ -100,6 +100,7 @@ namespace Erste.Sluzbenik
                         polaznik.osoba.Prezime = textBox_Prezime.Text;
                         polaznik.osoba.Email = textBox_Email.Text;
                         polaznik.osoba.BrojTelefona = textBox_BrojTelefona.Text;
+                        polaznik.osoba.Vazeci = true;
 
                         try
                         {
@@ -166,8 +167,7 @@ namespace Erste.Sluzbenik
                     polaznik polaznikRemove = ersteModel.polaznici.Find(polaznik.Id);
                     if (polaznikRemove?.osoba != null)
                     {
-                        ersteModel.osobe.Remove(polaznikRemove.osoba);
-                        ersteModel.SaveChanges();
+                        polaznik.osoba.Vazeci = false;
                     }
                 }
                 Close();
