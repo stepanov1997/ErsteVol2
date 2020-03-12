@@ -1,4 +1,4 @@
-use erstev2;
+use erste;
 
 delimiter %%
 create trigger povecaj_broj_clanova after insert

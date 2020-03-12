@@ -31,7 +31,7 @@
         <xctk:TimePicker x:Name="TimePickerDo" Value="{Binding CurrentDateTime}" Margin="152,0,0,114.667" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160"/>
         <Label x:Name="label1" Content="Podaci o grupi" Margin="106,0,89,446" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
         <Label VerticalAlignment="Bottom"  Margin="61,0,0,397" Height="26" Content="Naziv grupe:" HorizontalAlignment="Left" Width="86" />
-        <TextBox x:Name="textBox_NazivGrupe" HorizontalAlignment="Left" Height="23" Margin="172,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="159" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="textBox_NazivGrupe" HorizontalAlignment="Left" Height="23" Margin="172,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="159" TextChanged="TextBox_TextChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
         <DatePicker x:Name="DatePickerOd" Margin="0,123,54,0" Width="165" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" FirstDayOfWeek="Monday">
             <DatePicker.Resources>
                 <Style TargetType="DatePickerTextBox">

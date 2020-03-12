@@ -15,10 +15,10 @@
             <ColumnDefinition Width="274*"/>
 
         </Grid.ColumnDefinitions>
-        <TextBox Name="textBox_Ime" VerticalAlignment="Top" Margin="110,78,743,0" Height="23"/>
-        <TextBox Name="textBox_Prezime" VerticalAlignment="Top" Margin="109,112,742,0" Height="23"/>
-        <TextBox Name="textBox_Email" VerticalAlignment="Top" Margin="109,151,742,0" Height="23"/>
-        <TextBox Name="textBox_BrojTelefona" VerticalAlignment="Top" Margin="109,192,742,0" Height="23"/>
+        <TextBox Name="textBox_Ime" VerticalAlignment="Top" Margin="110,78,743,0" Height="23" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <TextBox Name="textBox_Prezime" VerticalAlignment="Top" Margin="109,112,742,0" Height="23" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <TextBox Name="textBox_Email" VerticalAlignment="Top" Margin="109,151,742,0" Height="23" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <TextBox Name="textBox_BrojTelefona" VerticalAlignment="Top" Margin="109,192,742,0" Height="23" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
 
         <Grid Margin="0,0,10,0">
             <Grid.RowDefinitions>

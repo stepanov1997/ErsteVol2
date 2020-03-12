@@ -17,7 +17,7 @@
             <ColumnDefinition Width="143*"/>
         </Grid.ColumnDefinitions>
         <Label  Margin="67,78,83,110" Content="Naziv grupe:" />
-        <TextBox x:Name="NazivBox" Margin="155,84,63.667,135" ToolTip="Unesite dan kad će se održavati termin." Grid.ColumnSpan="2"/>
+        <TextBox x:Name="NazivBox" Margin="155,84,63.667,135" ToolTip="Unesite dan kad će se održavati termin." Grid.ColumnSpan="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
 
         <Label Margin="67,120,93,75.333" Content="Jezik kursa:&#xD;&#xA;"/>
 

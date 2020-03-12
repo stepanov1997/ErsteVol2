@@ -14,10 +14,10 @@
             <ColumnDefinition Width="274*"/>
 
         </Grid.ColumnDefinitions>
-        <TextBox Name="textBox_Ime" VerticalAlignment="Top" Margin="0,71,82,0" Height="18" HorizontalAlignment="Right" Width="160"/>
-        <TextBox Name="textBox_Prezime" VerticalAlignment="Top" Margin="0,111,82,0" Height="18" HorizontalAlignment="Right" Width="160"/>
-        <TextBox Name="textBox_Email" VerticalAlignment="Top" Margin="0,151,82,0" Height="18" HorizontalAlignment="Right" Width="160"/>
-        <TextBox Name="textBox_BrojTelefona" VerticalAlignment="Top" Margin="0,191,82,0" Height="18" HorizontalAlignment="Right" Width="160"/>
+        <TextBox Name="textBox_Ime" VerticalAlignment="Top" Margin="0,71,82,0" Height="18" HorizontalAlignment="Right" Width="160"  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <TextBox Name="textBox_Prezime" VerticalAlignment="Top" Margin="0,111,82,0" Height="18" HorizontalAlignment="Right" Width="160" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <TextBox Name="textBox_Email" VerticalAlignment="Top" Margin="0,151,82,0" Height="18" HorizontalAlignment="Right" Width="160" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <TextBox Name="textBox_BrojTelefona" VerticalAlignment="Top" Margin="0,191,82,0" Height="18" HorizontalAlignment="Right" Width="160" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
 
         <Grid Grid.Row="8">
             <Grid.ColumnDefinitions>

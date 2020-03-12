@@ -14,8 +14,8 @@
         <Grid>
             <Label x:Name="label" Content="Korisničko ime:" FontSize="12.5" Margin="116,134,314,0" Height="26" VerticalAlignment="Top"/>
             <Label x:Name="label1" Content="Lozinka:" FontSize="12.5" Margin="116,180,351.667,0" Height="26" VerticalAlignment="Top"/>
-            <TextBox x:Name="usernameBox" Margin="260,140,112.667,0" TextWrapping="Wrap" Height="24" VerticalAlignment="Top"/>
-            <PasswordBox x:Name="passwordBox" Margin="260,180,112.667,0" Height="24" MaxLength="16" VerticalAlignment="Top" KeyDown="passwordBox_KeyDown"/>
+            <TextBox x:Name="usernameBox" Margin="260,137,112.667,0" TextWrapping="Wrap" Height="24" VerticalAlignment="Top"  HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <PasswordBox x:Name="passwordBox" Margin="260,180,112.667,0" Height="24" MaxLength="16" VerticalAlignment="Top"  HorizontalContentAlignment="Left" VerticalContentAlignment="Center" KeyDown="passwordBox_KeyDown"/>
             <TextBox x:Name="passwordBoxReveal" Margin="261,180,111.667,0" Height="24" VerticalAlignment="Top" KeyDown="passwordBox_KeyDown" Visibility="Collapsed"/>
             <Image x:Name="PasswordRevealImage" Source="Resources/password_eye.png" Width="22" Stretch="Uniform" MouseDown="RevealPassword_OnMouseDown" MouseUp="RevealPassword_OnMouseUp" Margin="390,180,114.667,136"/>
             <Button x:Name="button" BorderThickness="0" Cursor="Hand" Height="35" Background="#FFEF3D4A" Margin="205,275,205,30" Click="Prijava_Click">
