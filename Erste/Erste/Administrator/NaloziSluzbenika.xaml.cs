@@ -58,6 +58,7 @@ namespace Erste.Administrator
 
         private void Load_Data()
         {
+            Search.Text = "";
             DataGrid.Items.Clear();
             DataGrid.ItemsSource = null;
             DataGrid.Items.Refresh();
@@ -66,11 +67,11 @@ namespace Erste.Administrator
                 using (var ersteModel = new ErsteModel())
                 {
                     var sluzbenici = (from sluzbenik in ersteModel.sluzbenici
-                                      join osoba in ersteModel.osobe on sluzbenik.Id equals osoba.Id
-                                      where osoba.Vazeci == true
-                                      select sluzbenik).ToList();
+                        join osoba in ersteModel.osobe on sluzbenik.Id equals osoba.Id
+                        where osoba.Vazeci == true
+                        select sluzbenik).ToList();
 
-                    foreach(var sluzbenik in sluzbenici)
+                    foreach (var sluzbenik in sluzbenici)
                     {
                         if (sluzbenik.osoba != null)
                         {
@@ -93,6 +94,51 @@ namespace Erste.Administrator
 
             Load_Data();
             e.Cancel = true;
+        }
+
+        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = Search.Text;
+            if (Dispatcher != null)
+            {
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    DataGrid.Items.Clear();
+                    DataGrid.ItemsSource = null;
+                    DataGrid.Items.Refresh();
+                });
+            }
+
+
+            try
+            {
+                using (var ersteModel = new ErsteModel())
+                {
+                    var sluzbenici = (from sluzbenik in ersteModel.sluzbenici
+                            join osoba in ersteModel.osobe on sluzbenik.Id equals osoba.Id
+                            where osoba.Vazeci == true
+                            select sluzbenik)
+                        .Where(s => (s.osoba.Ime + " " + s.osoba.Prezime + " " +
+                                     s.osoba.BrojTelefona + " " +
+                                     s.osoba.Email + " " + s.KorisnickoIme).ToLower().Contains(text.ToLower()))
+                        .ToList();
+
+                    foreach (var sluzbenik in sluzbenici)
+                    {
+                        if (sluzbenik.osoba != null)
+                        {
+                            DataGrid.Items.Add(sluzbenik);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Dispatcher != null)
+                {
+                    MessageBox.Show("Greska");
+                }
+            }
         }
     }
 }

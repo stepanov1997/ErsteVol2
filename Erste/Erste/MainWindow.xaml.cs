@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -112,29 +113,159 @@ namespace Erste
         private async void Prijava_Click(object sender, RoutedEventArgs e)
         {
             await Task.Run(async () =>
-            {
-                if (Dispatcher != null)
-                    await Dispatcher?.InvokeAsync(() =>
-                    {
-                        usernameBox.IsEnabled = false;
-                        passwordBox.IsEnabled = false;
-                        NapomenaBox.Visibility = Visibility.Visible;
-                        NapomenaBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x6D, 0xCE, 0xF9));
-                        NapomenaBox.Text = "Molimo sačekajte...";
-                    });
-
-                string username = "", password = "";
-
-                if (Dispatcher != null)
-                    await Dispatcher?.InvokeAsync(() =>
-                    {
-                        username = usernameBox.Text;
-                        password = passwordBox.Password;
-                    });
-
-                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 {
-                    if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
+                    try
+                    {
+                        if (Dispatcher != null)
+                            await Dispatcher?.InvokeAsync(() =>
+                            {
+                                usernameBox.IsEnabled = false;
+                                passwordBox.IsEnabled = false;
+                                NapomenaBox.Visibility = Visibility.Visible;
+                                NapomenaBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x6D, 0xCE, 0xF9));
+                                NapomenaBox.Text = "Molimo sačekajte...";
+                            });
+
+                        string username = "", password = "";
+
+                        if (Dispatcher != null)
+                            await Dispatcher?.InvokeAsync(() =>
+                            {
+                                username = usernameBox.Text;
+                                password = passwordBox.Password;
+                            });
+
+                        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                        {
+                            if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
+                            {
+                                if (Dispatcher != null)
+                                    await Dispatcher?.InvokeAsync(() =>
+                                    {
+                                        NapomenaBox.Visibility = Visibility.Visible;
+                                        NapomenaBox.Background =
+                                            new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
+                                        usernameBox.IsEnabled = true;
+                                        passwordBox.IsEnabled = true;
+                                        NapomenaBox.Text = "Unesite korisničko ime i lozinku.";
+                                    });
+                                return;
+                            }
+
+                            if (string.IsNullOrEmpty(username))
+                            {
+                                if (Dispatcher != null)
+                                    await Dispatcher?.InvokeAsync(() =>
+                                    {
+                                        NapomenaBox.Visibility = Visibility.Visible;
+                                        NapomenaBox.Background =
+                                            new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
+                                        usernameBox.IsEnabled = true;
+                                        passwordBox.IsEnabled = true;
+                                        NapomenaBox.Text = "Unesite korisničko ime.";
+                                    });
+                                return;
+                            }
+                            else
+                            {
+                                if (Dispatcher != null)
+                                    await Dispatcher?.InvokeAsync(() =>
+                                    {
+                                        NapomenaBox.Visibility = Visibility.Visible;
+                                        NapomenaBox.Background =
+                                            new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
+                                        usernameBox.IsEnabled = true;
+                                        passwordBox.IsEnabled = true;
+                                        NapomenaBox.Text = "Unesite lozinku.";
+                                    });
+                                return;
+                            }
+
+                        }
+
+                        HashGenerator hashGenerator = new HashGenerator();
+                        string hash = hashGenerator.ComputeHash(password);
+
+                        //slanje podataka na server i login
+                        using (ErsteModel context = new ErsteModel())
+                        {
+                            var administators =
+                                await (from a in context.administratori
+                                       where a.KorisnickoIme.Equals(username) && a.osoba.Vazeci == true
+                                       select a)
+                                    .ToListAsync();
+                            if (administators.Count != 0 && hash.Equals(administators[0].LozinkaHash))
+                            {
+                                if (Dispatcher != null)
+                                    await Dispatcher?.InvokeAsync(() =>
+                                    {
+                                        NapomenaBox.Visibility = Visibility.Visible;
+                                        NapomenaBox.Foreground = new SolidColorBrush(Colors.White);
+                                        NapomenaBox.Background = new SolidColorBrush(Colors.LightGreen);
+                                        usernameBox.IsEnabled = true;
+                                        passwordBox.IsEnabled = true;
+                                        NapomenaBox.Text =
+                                            "Uspješno ste se prijavili. Sačekajte da se učita novi prozor.";
+                                    });
+
+                                await Task.Delay(1500);
+
+                                if (Dispatcher != null)
+                                    await Dispatcher?.InvokeAsync(() =>
+                                    {
+                                        AdminMainWindow window = new AdminMainWindow();
+                                        window.Show();
+                                        Close();
+                                    });
+
+                                return;
+                            }
+
+                            var employees = await (from a in context.sluzbenici
+                                                   where a.KorisnickoIme.Equals(username) && a.osoba.Vazeci == true
+                                                   select a)
+                                .ToListAsync();
+                            if (employees.Count != 0 && hash.Equals(employees[0].LozinkaHash))
+                            {
+                                if (Dispatcher != null)
+                                    await Dispatcher?.InvokeAsync(() =>
+                                    {
+                                        NapomenaBox.Visibility = Visibility.Visible;
+                                        NapomenaBox.Text =
+                                            "Uspješno ste se prijavili. Sačekajte da se učita novi prozor.";
+                                        usernameBox.IsEnabled = true;
+                                        passwordBox.IsEnabled = true;
+                                        NapomenaBox.Foreground = new SolidColorBrush(Colors.White);
+                                        NapomenaBox.Background = new SolidColorBrush(Colors.LightGreen);
+                                    });
+
+                                await Task.Delay(1500);
+
+                                if (Dispatcher != null)
+                                    await Dispatcher?.InvokeAsync(() =>
+                                    {
+                                        SluzbenikMainWindow window = new SluzbenikMainWindow { Owner = null };
+                                        window.Show();
+                                        Hide();
+                                    });
+                                return;
+                            }
+                        }
+
+                        if (Dispatcher != null)
+                            await Dispatcher?.InvokeAsync(() =>
+                            {
+                                NapomenaBox.Visibility = Visibility.Visible;
+                                NapomenaBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
+                                usernameBox.IsEnabled = true;
+                                passwordBox.IsEnabled = true;
+                                NapomenaBox.Text = "Nalog sa tim korisničkim imenom i lozinkom ne postoji.";
+                            });
+
+                        await Task.Delay(5000);
+
+                    }
+                    catch (Exception exception)
                     {
                         if (Dispatcher != null)
                             await Dispatcher?.InvokeAsync(() =>
@@ -143,115 +274,13 @@ namespace Erste
                                 NapomenaBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
                                 usernameBox.IsEnabled = true;
                                 passwordBox.IsEnabled = true;
-                                NapomenaBox.Text = "Unesite korisničko ime i lozinku.";
+                                NapomenaBox.Text = "Konekcija nije uspostavljena.";
                             });
-                        return;
+
+                        await Task.Delay(5000);
                     }
-
-                    if (string.IsNullOrEmpty(username))
-                    {
-                        if (Dispatcher != null)
-                            await Dispatcher?.InvokeAsync(() =>
-                            {
-                                NapomenaBox.Visibility = Visibility.Visible;
-                                NapomenaBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
-                                usernameBox.IsEnabled = true;
-                                passwordBox.IsEnabled = true;
-                                NapomenaBox.Text = "Unesite korisničko ime.";
-                            });
-                        return;
-                    }
-                    else
-                    {
-                        if (Dispatcher != null)
-                            await Dispatcher?.InvokeAsync(() =>
-                            {
-                                NapomenaBox.Visibility = Visibility.Visible;
-                                NapomenaBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
-                                usernameBox.IsEnabled = true;
-                                passwordBox.IsEnabled = true;
-                                NapomenaBox.Text = "Unesite lozinku.";
-                            });
-                        return;
-                    }
-
-                }
-
-                HashGenerator hashGenerator = new HashGenerator();
-                string hash = hashGenerator.ComputeHash(password);
-
-                //slanje podataka na server i login
-                using (ErsteModel context = new ErsteModel())
-                {
-                    var administators =
-                        await (from a in context.administratori where a.KorisnickoIme.Equals(username) && a.osoba.Vazeci == true select a)
-                            .ToListAsync();
-                    if (administators.Count != 0 && hash.Equals(administators[0].LozinkaHash))
-                    {
-                        if (Dispatcher != null)
-                            await Dispatcher?.InvokeAsync(() =>
-                            {
-                                NapomenaBox.Visibility = Visibility.Visible;
-                                NapomenaBox.Foreground = new SolidColorBrush(Colors.White);
-                                NapomenaBox.Background = new SolidColorBrush(Colors.LightGreen);
-                                usernameBox.IsEnabled = true;
-                                passwordBox.IsEnabled = true;
-                                NapomenaBox.Text = "Uspješno ste se prijavili. Sačekajte da se učita novi prozor.";
-                            });
-
-                        await Task.Delay(1500);
-
-                        if (Dispatcher != null)
-                            await Dispatcher?.InvokeAsync(() =>
-                            {
-                                AdminMainWindow window = new AdminMainWindow();
-                                window.Show();
-                                Close();
-                            });
-
-                        return;
-                    }
-
-                    var employees = await (from a in context.sluzbenici where a.KorisnickoIme.Equals(username) && a.osoba.Vazeci == true select a)
-                        .ToListAsync();
-                    if (employees.Count != 0 && hash.Equals(employees[0].LozinkaHash))
-                    {
-                        if (Dispatcher != null)
-                            await Dispatcher?.InvokeAsync(() =>
-                            {
-                                NapomenaBox.Visibility = Visibility.Visible;
-                                NapomenaBox.Text = "Uspješno ste se prijavili. Sačekajte da se učita novi prozor.";
-                                usernameBox.IsEnabled = true;
-                                passwordBox.IsEnabled = true;
-                                NapomenaBox.Foreground = new SolidColorBrush(Colors.White);
-                                NapomenaBox.Background = new SolidColorBrush(Colors.LightGreen);
-                            });
-
-                        await Task.Delay(1500);
-
-                        if (Dispatcher != null)
-                            await Dispatcher?.InvokeAsync(() =>
-                            {
-                                SluzbenikMainWindow window = new SluzbenikMainWindow { Owner = null };
-                                window.Show();
-                                Hide();
-                            });
-                        return;
-                    }
-                }
-                if (Dispatcher != null)
-                    await Dispatcher?.InvokeAsync(() =>
-                    {
-                        NapomenaBox.Visibility = Visibility.Visible;
-                        NapomenaBox.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xEF, 0x3D, 0x4A));
-                        usernameBox.IsEnabled = true;
-                        passwordBox.IsEnabled = true;
-                        NapomenaBox.Text = "Nalog sa tim korisničkim imenom i lozinkom ne postoji.";
-                    });
-
-                await Task.Delay(5000);
-
-            }).ContinueWith(async a =>
+                })
+                .ContinueWith(async a =>
             {
                 await Task.Delay(5000);
 

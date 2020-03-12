@@ -721,3 +721,8 @@ C:\Users\baralicD\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.csproj.Core
 C:\Users\baralicD\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.csproj.CopyComplete
 C:\Users\baralicD\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.exe
 C:\Users\baralicD\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.pdb
+C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\bin\Debug\MySql.Data.xml
+C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\bin\Debug\MySql.Data.EntityFramework.xml
+C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Erste.exe.config
+C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Sluzbenik\IzmjenaGrupe.g.cs
+C:\Users\stepa\source\repos\ErsteVol2\Erste\Erste\obj\Debug\Sluzbenik\IzmjenaGrupe.baml

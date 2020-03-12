@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace Erste.Sluzbenik
             {
                 await Dispatcher.InvokeAsync(() =>
                 {
+                    Search.Text = "";
                     DataGrid.Items.Clear();
                     DataGrid.ItemsSource = null;
                     DataGrid.Items.Refresh();
@@ -72,6 +74,54 @@ namespace Erste.Sluzbenik
         private void DataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             e.Cancel = true;
+        }
+        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = Search.Text;
+            if (Dispatcher != null)
+            {
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    DataGrid.Items.Clear();
+                    DataGrid.ItemsSource = null;
+                    DataGrid.Items.Refresh();
+                });
+            }
+
+
+            try
+            {
+                using (var ersteModel = new ErsteModel())
+                {
+                    var polazniciNaCekanju = ersteModel.polaznici_na_cekanju.Where(pnc => pnc.polaznik.osoba.Vazeci).ToList();
+                    foreach (var polaznikNaCekanju in polazniciNaCekanju)
+                    {
+                        var kursevi = polaznikNaCekanju.kursevi
+                            .Where(k => k.Vazeci && k.jezik.Vazeci)
+                            .Where(k => (polaznikNaCekanju.polaznik.osoba.Ime + " " + polaznikNaCekanju.polaznik.osoba.Prezime + " " +
+                                         polaznikNaCekanju.polaznik.osoba.BrojTelefona + " " +
+                                         polaznikNaCekanju.polaznik.osoba.Email + " " + k.jezik.Naziv + " " + k.Nivo).ToLower().Contains(text.ToLower()))
+                            .ToList();
+                        foreach (var k in kursevi)
+                        {
+                            PolaznikNaCekanjuKurs pnck = new PolaznikNaCekanjuKurs
+                            {
+                                Osoba = polaznikNaCekanju.polaznik.osoba,
+                                Kurs = k,
+                                Jezik = k.jezik
+                            };
+                            await Dispatcher.InvokeAsync(() => { DataGrid.Items.Add(pnck); });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Dispatcher != null)
+                {
+                    MessageBox.Show("Greska");
+                }
+            }
         }
     }
 

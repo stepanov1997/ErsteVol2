@@ -139,7 +139,7 @@ namespace Erste.Sluzbenik
             {
                 using (var ersteModel = new ErsteModel())
                 {
-                    polaznik polaznikRemove = ersteModel.polaznici.Where(p => p.Id == polaznik.Id).First();
+                    polaznik polaznikRemove = ersteModel.polaznici.First(p => p.Id == polaznik.Id);
                     polaznikRemove.osoba.Vazeci = false;
                     ersteModel.SaveChanges();
 

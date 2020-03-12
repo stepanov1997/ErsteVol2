@@ -32,7 +32,7 @@ namespace Erste.Sluzbenik
 
         private void Init()
         {
-            if (grupa == null)
+            if (grupa == null || grupa != null && !grupa.Vazeca)
             {
                 using (ErsteModel model = new ErsteModel())
                 {
@@ -46,7 +46,7 @@ namespace Erste.Sluzbenik
             }
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                BrojClanovaBox.Text = $"{ersteModel.grupe.Where(g => g.Vazeca && g.Id==grupa.Id).Select(g => g.BrojClanova).First()}";
+                BrojClanovaBox.Text = $"{ersteModel.grupe.First(g => g.Vazeca && g.Id == grupa.Id).polaznici.Count}";
                 kurs kurs = ersteModel.kursevi.Where(k => k.Vazeci).First(e => e.grupe.Where(g => g.Vazeca).Any(p => p.Id == grupa.Id));
                 if (!(kurs is null))
                 {
@@ -61,7 +61,7 @@ namespace Erste.Sluzbenik
                     NazivGrupeCombo.SelectedIndex = grupe.IndexOf(grupa.Naziv);
                     flag = true;
                     NivoKursa.Text = $"{kurs.Nivo}";
-                    jezik jezik = ersteModel.jezici.Where(j => j.Vazeci).Where(j => j.kursevi.Where(k => k.Vazeci).Any(k => k.Id==kurs.Id)).First();
+                    jezik jezik = ersteModel.jezici.Where(j => j.Vazeci).First(j => j.kursevi.Where(k => k.Vazeci).Any(k => k.Id == kurs.Id));
                     if (!(jezik is null))
                         jezikKursa.Text = $"{jezik.Naziv}";
                     datumOd.Text = grupa.DatumOd.ToString("dd.MM.yyyy");
@@ -350,14 +350,26 @@ namespace Erste.Sluzbenik
                         string ime = p[0];
                         string prezime = p[1];
                         string email = p[2];
-                        polaznik polaznik = ersteModel.polaznici.First(g => g.osoba.Vazeci && g.osoba.Ime == ime && g.osoba.Prezime == prezime && g.osoba.Email == email);
-                        grupa grupica = ersteModel.grupe.Where(gr => gr.Vazeca && gr.Id == grupa.Id).ToList().First();
-                        grupica.polaznici.Add(polaznik);
-                        polaznik.grupe.Add(grupica);
+                        List<polaznik> polaznici = ersteModel.polaznici.Where(g =>
+                            g.osoba.Vazeci && g.osoba.Ime == ime && g.osoba.Prezime == prezime &&
+                            g.osoba.Email == email).ToList();
+                        polaznik polaznik = null;
+                        polaznik_na_cekanju p_na_c = null;
+                        int index = 0;
+                        while (index < polaznici.Count && (p_na_c=(polaznik = polaznici[index++]).polaznik_na_cekanju) is null);
+                        if (p_na_c is null)
+                        {
+                            MessageBox.Show("Dodjeljivanje kandidata nije moguće", "Greška", MessageBoxButton.OK,
+                                MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                            return;
+                        }
+                        grupa grupica = ersteModel.grupe.Where(gr => gr.Vazeca && gr.Id == grupa.Id).ToList()
+                                                        .First();
                         string odabraniNivo = NivoKursa.Text;
                         string odabraniJezik = jezikKursa.Text;
-                        polaznik_na_cekanju p_na_c = polaznik.polaznik_na_cekanju;
-                        kurs kurs_za_p_na_c = p_na_c.kursevi.First(k =>  k.Vazeci && k.Nivo == odabraniNivo && k.jezik.Vazeci && k.jezik.Naziv == odabraniJezik);
+                        grupica.polaznici.Add(polaznik);
+                        polaznik.grupe.Add(grupica);
+                        kurs kurs_za_p_na_c = p_na_c.kursevi.First(k => k.Vazeci && k.Nivo == odabraniNivo && k.jezik.Vazeci && k.jezik.Naziv == odabraniJezik);
                         kurs_za_p_na_c.polaznici_na_cekanju.Remove(p_na_c);
                         p_na_c.kursevi.Remove(kurs_za_p_na_c);
                         p_na_c.polaznik.polaznik_na_cekanju = null;
@@ -389,7 +401,7 @@ namespace Erste.Sluzbenik
             using (ErsteModel ersteModel = new ErsteModel())
             {
                 grupa st = ersteModel.grupe.First(g => g.Vazeca && g.Id == grupa.Id);
-                profesor profesor = ersteModel.profesori.Where(pr => pr.osoba.Vazeci && pr.Id==profa.Id).First();
+                profesor profesor = ersteModel.profesori.Where(pr => pr.osoba.Vazeci && pr.Id == profa.Id).First();
                 st.profesori.Remove(profesor);
                 ersteModel.SaveChanges();
             }
@@ -408,7 +420,7 @@ namespace Erste.Sluzbenik
                 kurs kurs_za_p_na_c = ersteModel.kursevi.ToList().First(k => k.Vazeci && k.jezik.Vazeci && k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
                 kurs_za_p_na_c.polaznici_na_cekanju.Add(p_na_c);
                 p_na_c.kursevi.Add(kurs_za_p_na_c);
-                grupa grupica = ersteModel.grupe.Where(g => g.Vazeca && g.Id==grupa.Id).First();
+                grupa grupica = ersteModel.grupe.Where(g => g.Vazeca && g.Id == grupa.Id).First();
                 p.grupe.Remove(grupica);
                 grupica.polaznici.Remove(p);
                 ersteModel.SaveChanges();
@@ -419,6 +431,39 @@ namespace Erste.Sluzbenik
         private void Table_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             e.Cancel = true;
+        }
+
+        private async void ObrisiGrupu_Click(object sender, RoutedEventArgs e)
+        {
+            using (ErsteModel ersteModel = new ErsteModel())
+            {
+                grupa grupaZaBrisanje = await ersteModel.grupe.FirstAsync(g => g.Id == grupa.Id);
+                List<polaznik> polaznici = await ersteModel.polaznici
+                    .Where(p => p.osoba.Vazeci && p.grupe.Any(g => g.Vazeca && g.Id == grupa.Id))
+                    .ToListAsync();
+                string odabraniNivo = NivoKursa.Text;
+                string odabraniJezik = jezikKursa.Text;
+                foreach (var polaznik in polaznici)
+                {
+                    polaznik_na_cekanju p_na_c = polaznik.polaznik_na_cekanju = new polaznik_na_cekanju() { Id = polaznik.Id, kursevi = new List<kurs>(), polaznik = polaznik };
+                    kurs kurs_za_p_na_c = ersteModel.kursevi.ToList().First(k => k.Vazeci && k.jezik.Vazeci && k.Nivo.Equals(odabraniNivo) && k.jezik.Naziv.Equals(odabraniJezik));
+                    kurs_za_p_na_c.polaznici_na_cekanju.Add(p_na_c);
+                    p_na_c.kursevi.Add(kurs_za_p_na_c);
+                    grupa grupica = ersteModel.grupe.First(g => g.Vazeca && g.Id == grupa.Id);
+                    polaznik.grupe.Remove(grupica);
+                    grupica.polaznici.Remove(polaznik);
+                }
+                grupaZaBrisanje.Vazeca = false;
+                await ersteModel.SaveChangesAsync();
+            }
+            Init();
+        }
+
+        private void IzmjeniGrupu_Click(object sender, RoutedEventArgs e)
+        {
+            IzmjenaGrupe izmjenaGrupe = new IzmjenaGrupe(grupa.Id);
+            izmjenaGrupe.ShowDialog();
+            Init();
         }
     }
 

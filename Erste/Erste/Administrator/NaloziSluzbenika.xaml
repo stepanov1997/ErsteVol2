@@ -9,7 +9,12 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -17,7 +22,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <DataGrid Name="DataGrid" Grid.ColumnSpan="3" Background="White" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" VerticalGridLinesBrush="#FFB2B2B2" HorizontalGridLinesBrush="#FFB2B2B2" BeginningEdit="DataGrid_OnBeginningEdit">
+        <Image Source="../Resources/find icon.png" Margin="180,15,6.667,10.333"></Image>
+        <TextBox x:Name="Search" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="30" TextAlignment="Center" TextChanged="TextBox_TextChanged"/>
+        <DataGrid Name="DataGrid" Grid.RowSpan="5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" BeginningEdit="DataGrid_OnBeginningEdit" VerticalGridLinesBrush="#FFB2B2B2" HorizontalGridLinesBrush="#FFB2B2B2" CellStyle="{StaticResource DataGridCellErsteStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding Path=osoba.Ime}"></DataGridTextColumn>
                 <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding Path=osoba.Prezime}"></DataGridTextColumn>

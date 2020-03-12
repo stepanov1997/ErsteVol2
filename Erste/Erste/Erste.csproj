@@ -149,6 +149,9 @@
     <Compile Include="SluzbenikMainWindow.xaml.cs">
       <DependentUpon>SluzbenikMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sluzbenik\IzmjenaGrupe.xaml.cs">
+      <DependentUpon>IzmjenaGrupe.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Sluzbenik\Kandidati.xaml.cs">
       <DependentUpon>Kandidati.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
     <Page Include="SluzbenikMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Sluzbenik\IzmjenaGrupe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Sluzbenik\Kandidati.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -312,6 +319,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\find icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

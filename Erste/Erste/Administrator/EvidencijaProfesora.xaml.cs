@@ -58,6 +58,7 @@ namespace Erste.Administrator
 
         private void Load_Data()
         {
+            Search.Text = "";
             DataGrid.Items.Clear();
             DataGrid.ItemsSource = null;
             DataGrid.Items.Refresh();
@@ -93,6 +94,51 @@ namespace Erste.Administrator
 
             Load_Data();
             e.Cancel = true;
+        }
+
+        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = Search.Text;
+            if (Dispatcher != null)
+            {
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    DataGrid.Items.Clear();
+                    DataGrid.ItemsSource = null;
+                    DataGrid.Items.Refresh();
+                });
+            }
+
+
+            try
+            {
+                using (var ersteModel = new ErsteModel())
+                {
+                    var profesori = (from profesor in ersteModel.profesori
+                            join osoba in ersteModel.osobe on profesor.Id equals osoba.Id
+                            where osoba.Vazeci == true
+                            select profesor)
+                        .Where(s => (s.osoba.Ime + " " + s.osoba.Prezime + " " +
+                                     s.osoba.BrojTelefona + " " +
+                                     s.osoba.Email + " ").ToLower().Contains(text.ToLower()))
+                        .ToList();
+
+                    foreach (var profesor in profesori)
+                    {
+                        if (profesor.osoba != null)
+                        {
+                            DataGrid.Items.Add(profesor);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Dispatcher != null)
+                {
+                    MessageBox.Show("Greska");
+                }
+            }
         }
     }
 }

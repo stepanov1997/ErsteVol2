@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Erste.Sluzbenik;
 
 namespace Erste.Administrator
 {
@@ -54,6 +55,7 @@ namespace Erste.Administrator
 
         private void Load_Data()
         {
+            Search.Text = "";
             DataGrid.Items.Clear();
             DataGrid.ItemsSource = null;
             DataGrid.Items.Refresh();
@@ -89,6 +91,48 @@ namespace Erste.Administrator
 
             Load_Data();
             e.Cancel = true;
+        }
+
+        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = Search.Text;
+            if (Dispatcher != null)
+            {
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    DataGrid.Items.Clear();
+                    DataGrid.ItemsSource = null;
+                    DataGrid.Items.Refresh();
+                });
+            }
+
+
+            try
+            {
+                using (var ersteModel = new ErsteModel())
+                {
+                    var kursevi = (from kurs in ersteModel.kursevi
+                        join jezik in ersteModel.jezici on kurs.JezikId equals jezik.Id
+                        where kurs.Vazeci == true
+                        select kurs)
+                        .Where(k => (k.jezik.Naziv + " " + k.Nivo).ToLower().Contains(text.ToLower())).ToList();
+
+                    foreach (var kurs in kursevi)
+                    {
+                        if (kurs.jezik != null)
+                        {
+                            DataGrid.Items.Add(kurs);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Dispatcher != null)
+                {
+                    MessageBox.Show("Greska");
+                }
+            }
         }
     }
 }

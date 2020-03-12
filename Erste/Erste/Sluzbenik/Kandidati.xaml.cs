@@ -64,6 +64,7 @@ namespace Erste.Sluzbenik
             {
                 await Dispatcher.InvokeAsync(() =>
                 {
+                    Search.Text = "";
                     DataGrid.Items.Clear();
                     DataGrid.ItemsSource = null;
                     DataGrid.Items.Refresh();
@@ -102,13 +103,61 @@ namespace Erste.Sluzbenik
 
         }
 
-        private  void DataGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        private void DataGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             polaznik polaznik = DataGrid.SelectedItem as polaznik;
             KandidatiDialog kandidatiDialog = new KandidatiDialog(polaznik);
             kandidatiDialog.ShowDialog();
             Refresh();
             e.Cancel = true;
+        }
+
+        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = Search.Text;
+            if (Dispatcher != null)
+            {
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    DataGrid.Items.Clear();
+                    DataGrid.ItemsSource = null;
+                    DataGrid.Items.Refresh();
+                });
+            }
+
+
+            try
+            {
+                using (var ersteModel = new ErsteModel())
+                {
+                    var polaznici = (await (from polaznik in ersteModel.polaznici.Include("osoba")
+                            join osoba in ersteModel.osobe.Include("polaznik") on polaznik.Id equals osoba.Id
+                            where osoba.Vazeci
+                            select polaznik)
+                        .ToListAsync())
+                        .Select(p => (p.osoba.Ime + " " + p.osoba.Prezime + " " + p.osoba.BrojTelefona + " " +
+                                p.osoba.Email, p))
+                        .Where(pair => pair.Item1.ToLower().Contains(text.ToLower() ?? ""))
+                        .ToList();
+
+
+
+                    foreach ((_, polaznik p) in polaznici)
+                    {
+                        if (p.osoba != null && Dispatcher != null)
+                        {
+                            await Dispatcher.InvokeAsync(() => { DataGrid.Items.Add(p); });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Dispatcher != null)
+                {
+                    MessageBox.Show("Greska");
+                }
+            }
         }
     }
 }
