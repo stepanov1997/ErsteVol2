@@ -315,12 +315,6 @@
     <Resource Include="Resources\PregledKandidata.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\find icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

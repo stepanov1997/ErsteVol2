@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Erste.Sluzbenik
 {
@@ -163,7 +155,7 @@ namespace Erste.Sluzbenik
                 p.grupe.Add(zapisGrupa);
                 zapisGrupa.polaznici.Add(p);
 
-                MessageBox.Show("Uspjesno dodan polaznik.");
+                MessageBox.Show("Uspješno je dodat polaznik.");
                 ersteModel.SaveChanges();
                 ersteModel.Dispose();
 
@@ -236,7 +228,7 @@ namespace Erste.Sluzbenik
                     //dodavanje grupe u tabelu
                     //ersteModel.grupe.Add(g);
 
-                    MessageBox.Show("Polaznik uspjesno ubacen u grupu.Polaznici na cekanju za odabrani kurs i nivo su takodje uspjesno ubaceni u grupu.");
+                    MessageBox.Show("Polaznik uspješno ubacen u grupu. Polaznici na čekanju za odabrani kurs i nivo su takođe uspješno ubačeni u grupu.");
                     ersteModel.SaveChanges();
                     ersteModel.Dispose();
                 }
@@ -246,7 +238,7 @@ namespace Erste.Sluzbenik
                     kurs.polaznici_na_cekanju.Add(pnc);
                     pnc.kursevi.Add(kurs);
 
-                    MessageBox.Show("Polaznik dodat na listu cekanja za odabrani kurs i jezik.");
+                    MessageBox.Show("Polaznik dodat na listu čekanja za odabrani kurs i jezik.");
                     ersteModel.SaveChanges();
                     ersteModel.Dispose();
                 }

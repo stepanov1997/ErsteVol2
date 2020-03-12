@@ -71,7 +71,8 @@
             <Image Source="../Resources/add_icon.png" MouseUp="DodavanjeGrupe_OnMouseUp" Margin="0,0,0,2" />
         </StackPanel>
 
-        <Button x:Name="Button1" Grid.Column="2" Grid.Row="10" Grid.ColumnSpan="3" Content="U redu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Potvrdi_Click" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Bottom" Margin="71,0,74,0"/>
-        <Button x:Name="Button2" Grid.Column="4" Grid.Row="9" Margin="0,0,18,1" Grid.ColumnSpan="2" Content="Otkaži" Click="Button_Otkazi_Click" Style="{DynamicResource buttonStyle}" Height="31" Padding="0" HorizontalAlignment="Right" Width="98" VerticalAlignment="Bottom" Grid.RowSpan="2" />
+        <Button x:Name="Button1" Grid.Row="10" Grid.ColumnSpan="2" Content="U redu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Potvrdi_Click" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Bottom" Margin="1,0,22.667,1.333" Grid.Column="2"/>
+        <Button x:Name="Button2" Grid.Column="3" Grid.Row="9" Grid.ColumnSpan="2" Content="Obriši" Click="Button_Obrisi_Click" Style="{DynamicResource buttonStyle}" Height="31" Padding="0" HorizontalAlignment="Right" Width="98" VerticalAlignment="Bottom" Grid.RowSpan="2" />
+        <Button x:Name="Button3" Grid.Column="5" Grid.Row="10" Grid.ColumnSpan="2" Content="Otkaži" Click="Button_Otkazi_Click" Style="{DynamicResource buttonStyle}" Height="31" Padding="0" HorizontalAlignment="Right" Width="98" VerticalAlignment="Bottom" Margin="0,0,62.333,0.333" />
     </Grid>
 </Window>

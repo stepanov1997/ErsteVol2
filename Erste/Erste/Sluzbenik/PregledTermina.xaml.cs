@@ -40,8 +40,8 @@ namespace Erste.Sluzbenik
         private void Init()
         {
             DanCombo.Text = item.dan;
-            TimePickerOd.Value = new DateTime(2020, 01, 01, 0,0,0) + item.vrijemeOd;
-            TimePickerDo.Value = new DateTime(2020, 01, 01,0,0,0) + item.vrijemeDo;
+            TimePickerOd.Value = new DateTime(2020, 01, 01, 0, 0, 0) + item.vrijemeOd;
+            TimePickerDo.Value = new DateTime(2020, 01, 01, 0, 0, 0) + item.vrijemeDo;
             try
             {
                 using (ErsteModel ersteModel = new ErsteModel())
@@ -90,7 +90,7 @@ namespace Erste.Sluzbenik
                 MessageBox.Show("Popunite termine.");
                 return;
             }
-            Func<DateTime?, DateTime?, bool> compare = (a, b) => a?.TimeOfDay.CompareTo(b?.TimeOfDay)>0;
+            Func<DateTime?, DateTime?, bool> compare = (a, b) => a?.TimeOfDay.CompareTo(b?.TimeOfDay) > 0;
             if (compare(TimePickerOd.Value, TimePickerDo.Value))
             {
                 MessageBox.Show("Termin početka mora biti prije termina završetka.");
@@ -99,15 +99,15 @@ namespace Erste.Sluzbenik
 
             using (ErsteModel ersteModel = new ErsteModel())
             {
-                termin termin = ersteModel.termini.First(t => t.Vazeci && t.Id== item.termin.Id);
+                termin termin = ersteModel.termini.First(t => t.Vazeci && t.Id == item.termin.Id);
                 if (termin != null)
                 {
                     termin.Dan = DanCombo.Text;
-                    if (TimePickerOd.Value != null) 
+                    if (TimePickerOd.Value != null)
                         termin.Od = TimePickerOd.Value.Value.TimeOfDay;
                     if (TimePickerDo.Value != null)
                         termin.Do = TimePickerDo.Value.Value.TimeOfDay;
-                    if(GrupaCombo.Text!="Nije dodijeljena grupa" && !string.IsNullOrWhiteSpace(GrupaCombo.Text))
+                    if (GrupaCombo.Text != "Nije dodijeljena grupa" && !string.IsNullOrWhiteSpace(GrupaCombo.Text))
                         termin.GrupaId = (await ersteModel.grupe.FirstAsync(g => g.Vazeca && g.Naziv == GrupaCombo.Text)).Id;
                     await ersteModel.SaveChangesAsync();
                 }
@@ -137,12 +137,12 @@ namespace Erste.Sluzbenik
                     NazivGrupe = GrupaCombo.SelectedItem.ToString();
                 });
 
-            if (NazivGrupe==null || NazivGrupe == "Nije dodijeljena grupa")
+            if (NazivGrupe == null || NazivGrupe == "Nije dodijeljena grupa")
             {
                 MessageBox.Show("Nije dodijeljena grupa.");
                 return;
             }
-            
+
             using (ErsteModel ersteModel = new ErsteModel())
             {
                 //grupa = await ersteModel.grupe.FirstAsync(g => g.termini!=null && g.profesori!=null && g.polaznici!=null && g.Naziv == NazivGrupe);
@@ -164,6 +164,27 @@ namespace Erste.Sluzbenik
                     {
                         MessageBox.Show("Odaberite grupu, pa je onda pregledajte.");
                     });
+            }
+        }
+
+        private async void Button_Obrisi_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult res = MessageBox.Show("Da li ste sigurni da želite da obrišete termin?", "Brisanje termina",
+                MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
+            switch (res)
+            {
+                case MessageBoxResult.Yes:
+                    {
+                        using (ErsteModel ersteModel = new ErsteModel())
+                        {
+                            termin termin = await ersteModel.termini.FirstAsync(t => t.Id == item.termin.Id);
+                            termin.Vazeci = false;
+                            await ersteModel.SaveChangesAsync();
+                        }
+                        if (Dispatcher != null)
+                            await Dispatcher.InvokeAsync(Close);
+                    }
+                    break;
             }
         }
     }

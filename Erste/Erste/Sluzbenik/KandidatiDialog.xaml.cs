@@ -135,20 +135,30 @@ namespace Erste.Sluzbenik
 
         private void ObrisiKandidata()
         {
-            try
+            MessageBoxResult res = MessageBox.Show("Da li ste sigurni da želite da obrišete kandidata?", "Brisanje termina",
+                MessageBoxButton.YesNoCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
+            switch (res)
             {
-                using (var ersteModel = new ErsteModel())
-                {
-                    polaznik polaznikRemove = ersteModel.polaznici.First(p => p.Id == polaznik.Id);
-                    polaznikRemove.osoba.Vazeci = false;
-                    ersteModel.SaveChanges();
+                case MessageBoxResult.Yes:
+                    {
+                        try
+                        {
+                            using (var ersteModel = new ErsteModel())
+                            {
+                                polaznik polaznikRemove = ersteModel.polaznici.First(p => p.Id == polaznik.Id);
+                                polaznikRemove.osoba.Vazeci = false;
+                                ersteModel.SaveChanges();
 
-                }
-                Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("MySQL Exception: " + ex.ToString());
+                            }
+
+                            Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("MySQL Exception: " + ex.ToString());
+                        }
+                    }
+                    break;
             }
         }
     }
