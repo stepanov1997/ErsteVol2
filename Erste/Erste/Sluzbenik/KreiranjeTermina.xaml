@@ -6,10 +6,10 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Erste.Sluzbenik"
         mc:Ignorable="d"
-        Title="EvidencijaTerminaDialog" Height="320" Width="383.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Erste - novi termin" Icon="../Resources/erste_logo.png" Height="320" Width="383.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Label VerticalAlignment="Bottom"  Margin="84,0,0,193" Height="26" Content="Dan:" HorizontalAlignment="Left" Width="43" />
-        <ComboBox x:Name="DanCombo" Margin="0,76,66,0" Height="22" ToolTip="Unesite dan kad će se održavati termin." VerticalAlignment="Top" HorizontalAlignment="Right" Width="159">
+        <Label VerticalAlignment="Bottom"  Margin="81,0,0,180" Height="26" Content="Dan:" HorizontalAlignment="Left" Width="43" />
+        <ComboBox x:Name="DanCombo" Margin="0,89,69,0" Height="22" ToolTip="Unesite dan kad će se održavati termin." VerticalAlignment="Top" HorizontalAlignment="Right" Width="159">
             <ComboBox.Items>
                 <ComboBoxItem Content="Ponedjeljak"></ComboBoxItem>
                 <ComboBoxItem Content="Utorak"></ComboBoxItem>
@@ -21,13 +21,13 @@
             </ComboBox.Items>
         </ComboBox>
 
-        <Label VerticalAlignment="Bottom" Height="25" Margin="87,0,0,155" Content="Od:" HorizontalAlignment="Left" Width="29"/>
+        <Label VerticalAlignment="Bottom" Height="25" Margin="84,0,0,142" Content="Od:" HorizontalAlignment="Left" Width="29"/>
 
-        <Button x:Name="Button1" Content="Uredu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Button1Click" Margin="81,0,0,40.667" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="102"/>
-        <Button x:Name="Button2" Content="Otkaži" Click="Button_Otkazi_Click" Margin="0,0,53.667,40.667" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" HorizontalAlignment="Right" Width="108" VerticalAlignment="Bottom"/>
-        <Label VerticalAlignment="Bottom" Height="29" Margin="87,0,0,106" Content="Do:" RenderTransformOrigin="1.357,0.138" HorizontalAlignment="Left" Width="29"/>
-        <Label x:Name="label" Content="Podaci o terminu" Margin="106,0,88.667,234.667" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
-        <xctk:TimePicker x:Name="TimePickerOd" Value="{Binding CurrentDateTime}" Margin="0,0,65,155" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
-        <xctk:TimePicker x:Name="TimePickerDo" Value="{Binding CurrentDateTime}" Margin="0,0,65,115" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
+        <Button x:Name="Button1" Content="Uredu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Button1Click" Margin="63,0,0,32" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="102"/>
+        <Button x:Name="Button2" Content="Otkaži" Click="Button_Otkazi_Click" Margin="0,0,50,32" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" HorizontalAlignment="Right" Width="108" VerticalAlignment="Bottom"/>
+        <Label VerticalAlignment="Bottom" Height="29" Margin="84,0,0,93" Content="Do:" RenderTransformOrigin="1.357,0.138" HorizontalAlignment="Left" Width="29"/>
+        <Label x:Name="label" Content="Podaci o terminu" Margin="0,0,-2,235" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
+        <xctk:TimePicker x:Name="TimePickerOd" Value="{Binding CurrentDateTime}" Margin="0,0,68,142" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
+        <xctk:TimePicker x:Name="TimePickerDo" Value="{Binding CurrentDateTime}" Margin="0,0,68,102" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="160"/>
     </Grid>
 </Window>

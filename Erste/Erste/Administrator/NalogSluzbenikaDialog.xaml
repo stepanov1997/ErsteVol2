@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Erste.Administrator"
         mc:Ignorable="d"
-        Title="NalogSluzbenikaDialog" SizeToContent="WidthAndHeight" Height="450" Width="446.607" MinHeight="450" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Erste - Nalog službenika" Icon="../Resources/erste_logo.png" SizeToContent="WidthAndHeight" Height="450" Width="446.607" MinHeight="450" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="206*"/>

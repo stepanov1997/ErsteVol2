@@ -33,7 +33,7 @@ namespace Erste.Sluzbenik
             }
         }
 
-        private void btn_PrikaziGrupe_Click(object sender, RoutedEventArgs e)
+        private void PrikaziGrupe()
         {
             GrupeDataGrid.Items.Clear();
             ResetBorderColors();
@@ -92,9 +92,6 @@ namespace Erste.Sluzbenik
                     if (!GrupeDataGrid.Items.Contains(zapis))
                         GrupeDataGrid.Items.Add(zapis);
                 }
-
-
-
             }
         }
 
@@ -243,7 +240,7 @@ namespace Erste.Sluzbenik
                     ersteModel.Dispose();
                 }
             }
-            btn_PrikaziGrupe_Click(null,null);
+            PrikaziGrupe();
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
@@ -279,7 +276,7 @@ namespace Erste.Sluzbenik
             if(e.AddedItems.Count > 0)
             {
                 chb_Nivo.SelectedItem = e.AddedItems[0];
-                btn_PrikaziGrupe_Click(null, null);
+                PrikaziGrupe();
             }
         }
     }

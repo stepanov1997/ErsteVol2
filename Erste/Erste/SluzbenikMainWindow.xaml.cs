@@ -154,18 +154,28 @@ namespace Erste
 
         private async void PregledGrupa_OnClick(object sender, RoutedEventArgs e)
         {
-            ClickOnFieldColor(pregledGrupa);
-            if (Dispatcher != null)
-                await Dispatcher.InvokeAsync(() =>
+            using (ErsteModel ersteModel = new ErsteModel())
+            {
+                ClickOnFieldColor(pregledGrupa);
+                if (!ersteModel.grupe.Any(g => g.Vazeca))
                 {
-                    PregledGrupe pregledGrupe = new PregledGrupe(null);
-                    pregledGrupe.ShowDialog();
-                    ShowLastView();
-                    
-                });
-            if(raspored.Visibility == Visibility.Visible)
+                    MessageBox.Show("Nema postojećih grupa. Prvo kreirajte bar jednu, da biste mogli pregledati grupe.", "Nema grupa", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                }
+                else
+                {
+                    if (Dispatcher != null)
+                        await Dispatcher.InvokeAsync(() =>
+                        {
+                            PregledGrupe pregledGrupe = new PregledGrupe(null);
+                            pregledGrupe.ShowDialog();
+                        });
+                }
+                ShowLastView();
+            }
+
+            if (raspored.Visibility == Visibility.Visible)
                 await raspored.Refresh();
-            else if(kandidatiSvi.Visibility == Visibility.Visible)
+            else if (kandidatiSvi.Visibility == Visibility.Visible)
                 await kandidatiSvi.Refresh();
             else if (kandidatiCekanje.Visibility == Visibility.Visible)
                 await kandidatiCekanje.Refresh();

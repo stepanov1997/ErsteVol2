@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Erste.Sluzbenik"
         mc:Ignorable="d"
-          Title="Erste - nova grupa" Icon="../Resources/erste_logo.png" Height="390.333" Width="387.667" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+          Title="Erste - izmjena grupe" Icon="../Resources/erste_logo.png" Height="390.333" Width="387.667" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="245*"/>

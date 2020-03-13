@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Erste.Sluzbenik"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="Erste.Sluzbenik.PregledTermina"
         mc:Ignorable="d"
-        Title="PregledTermina" Height="376" Width="524.333" WindowStartupLocation="CenterScreen">
+        Title="Erste - pregled termina" Icon="../Resources/erste_logo.png" Height="376" Width="524.333" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150*"/>

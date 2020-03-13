@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Erste.Administrator"
         mc:Ignorable="d"
-        Title="Erste" SizeToContent="WidthAndHeight" Height="487.553" MinHeight="361" Width="405" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="Erste - izmjena profesora" Icon="../Resources/erste_logo.png" SizeToContent="WidthAndHeight" Height="487.553" MinHeight="361" Width="405" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

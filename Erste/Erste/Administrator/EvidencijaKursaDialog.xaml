@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Erste.Administrator"
         mc:Ignorable="d"
-        Title="EvidencijaKursaDialog" Height="350" Width="379"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Erste - podaci o kursu" Icon="../Resources/erste_logo.png" Height="350" Width="379"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

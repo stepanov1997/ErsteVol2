@@ -6,10 +6,10 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:Erste.Sluzbenik"
         mc:Ignorable="d"
-        Title="Erste" Height="519.152" Width="400.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Erste - upis grupe" Icon="../Resources/erste_logo.png" Height="519.152" Width="400.333" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Margin="0,0,0,-4">
-        <Label VerticalAlignment="Bottom"  Margin="84,0,0,193" Height="26" Content="Dan:" HorizontalAlignment="Left" Width="43" />
-        <ComboBox x:Name="DanCombo" Margin="152,0,0,192.667" Height="22" ToolTip="Unesite dan kad će se održavati termin." HorizontalAlignment="Left" Width="159" VerticalAlignment="Bottom">
+        <Label VerticalAlignment="Bottom"  Margin="87,0,0,189.333" Height="26" Content="Dan:" HorizontalAlignment="Left" Width="43" />
+        <ComboBox x:Name="DanCombo" Margin="161,0,0,193.333" Height="22" ToolTip="Unesite dan kad će se održavati termin." HorizontalAlignment="Left" Width="159" VerticalAlignment="Bottom">
             <ComboBox.Items>
                 <ComboBoxItem Content="Ponedjeljak"></ComboBoxItem>
                 <ComboBoxItem Content="Utorak"></ComboBoxItem>
@@ -21,18 +21,18 @@
             </ComboBox.Items>
         </ComboBox>
 
-        <Label VerticalAlignment="Bottom" Height="25" Margin="87,0,0,155" Content="Od:" HorizontalAlignment="Left" Width="29"/>
+        <Label VerticalAlignment="Bottom" Height="25" Margin="91,0,0,145.333" Content="Od:" HorizontalAlignment="Left" Width="29" RenderTransformOrigin="0.517,0.4"/>
 
         <Button x:Name="Button1" Content="Uredu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Button1Click" Margin="81,0,0,40.667" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="102"/>
         <Button x:Name="Button2" Content="Otkaži" Click="Button_Otkazi_Click" Margin="0,0,53.667,40.667" Style="{DynamicResource buttonStyle}" Height="30" Padding="0" HorizontalAlignment="Right" Width="108" VerticalAlignment="Bottom"/>
-        <Label VerticalAlignment="Bottom" Height="29" Margin="87,0,0,106" Content="Do:" RenderTransformOrigin="1.357,0.138" HorizontalAlignment="Left" Width="29"/>
-        <Label x:Name="label" Content="Podaci o terminu" Margin="106,0,89,241" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
-        <xctk:TimePicker x:Name="TimePickerOd" Value="{Binding CurrentDateTime}" Margin="152,0,0,154.667" HorizontalAlignment="Left" Width="160" Height="20" VerticalAlignment="Bottom"/>
-        <xctk:TimePicker x:Name="TimePickerDo" Value="{Binding CurrentDateTime}" Margin="152,0,0,114.667" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160"/>
-        <Label x:Name="label1" Content="Podaci o grupi" Margin="106,0,89,446" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
+        <Label VerticalAlignment="Bottom" Height="29" Margin="91,0,0,105.333" Content="Do:" RenderTransformOrigin="1.357,0.138" HorizontalAlignment="Left" Width="29"/>
+        <Label x:Name="label" Content="Podaci o terminu" Margin="0,0,-0.333,241.333" VerticalAlignment="Bottom" FontSize="19" HorizontalContentAlignment="Center" FontWeight="Bold" Foreground="DarkRed" Height="38"/>
+        <xctk:TimePicker x:Name="TimePickerOd" Value="{Binding CurrentDateTime}" Margin="160,0,0,150.333" HorizontalAlignment="Left" Width="160" Height="20" VerticalAlignment="Bottom"/>
+        <xctk:TimePicker x:Name="TimePickerDo" Value="{Binding CurrentDateTime}" Margin="160,0,0,110.333" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="160"/>
+        <Label x:Name="label1" Content="Podaci o grupi" Margin="0,0,-0.333,446.333" VerticalAlignment="Bottom" FontSize="19" FontWeight="Bold" HorizontalContentAlignment="Center" Foreground="DarkRed" Height="38"/>
         <Label VerticalAlignment="Bottom"  Margin="61,0,0,397" Height="26" Content="Naziv grupe:" HorizontalAlignment="Left" Width="86" />
-        <TextBox x:Name="textBox_NazivGrupe" HorizontalAlignment="Left" Height="23" Margin="172,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="159" TextChanged="TextBox_TextChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-        <DatePicker x:Name="DatePickerOd" Margin="0,123,54,0" Width="165" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" FirstDayOfWeek="Monday">
+        <TextBox x:Name="textBox_NazivGrupe" HorizontalAlignment="Left" Height="23" Margin="160,74,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="160" TextChanged="TextBox_TextChanged" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+        <DatePicker x:Name="DatePickerOd" Margin="0,123,74.667,0" Width="160" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" FirstDayOfWeek="Monday">
             <DatePicker.Resources>
                 <Style TargetType="DatePickerTextBox">
                     <Setter Property="Text" Value="Izaberite datum"/>
@@ -40,7 +40,7 @@
             </DatePicker.Resources>
         </DatePicker>
         <Label VerticalAlignment="Bottom"  Margin="61,0,0,349" Height="26" Content="DatumOd" HorizontalAlignment="Left" Width="86" />
-        <DatePicker x:Name="DatePickerDo" Margin="0,165,54,0" Width="165" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" FirstDayOfWeek="Monday">
+        <DatePicker x:Name="DatePickerDo" Margin="0,170,74.667,0" Width="160" Height="22" VerticalAlignment="Top" HorizontalAlignment="Right" FirstDayOfWeek="Monday">
             <DatePicker.Resources>
                 <Style TargetType="{x:Type DatePickerTextBox}">
                     <Setter Property="Text" Value="Izaberite datum"/>

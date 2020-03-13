@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Erste.Administrator"
         mc:Ignorable="d"
-        Title="NalogSluzbenikaDialog" SizeToContent="WidthAndHeight" Height="530" Width="998" MinHeight="530" MinWidth="998" MaxHeight="530" MaxWidth="998" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Erste - upis polaznika" Icon="../Resources/erste_logo.png" SizeToContent="WidthAndHeight" Height="530" Width="998" MinHeight="530" MinWidth="998" MaxHeight="530" MaxWidth="998" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="206*"/>
@@ -36,7 +36,6 @@
             <Label VerticalAlignment="Top" Height="26" Content="Broj telefona:" Margin="7,190,0,0" HorizontalAlignment="Left" Width="84"/>
             <Label VerticalAlignment="Top" Height="26"  Content="Jezik:" RenderTransformOrigin="1.481,0.613" Margin="48,226,0,0" HorizontalAlignment="Left" Width="39"/>
             <Label VerticalAlignment="Top" Height="26" Content="Nivo kursa:" Margin="16,258,0,0" HorizontalAlignment="Left" Width="78"  />
-            <Button x:Name="btn_PrikaziGrupe" Content="Prikaži grupe" Click="btn_PrikaziGrupe_Click"  Style="{DynamicResource buttonStyle}" Height="28" VerticalAlignment="Top" Grid.Row="1" Margin="53,57,50,0" RenderTransformOrigin="0.347,0.891" />
             <Button x:Name="Button2" Content="Otkaži" Click="Button2_Click"  Style="{DynamicResource buttonStyle}" Height="Auto" Grid.Row="1" Margin="269,150,0,22" Grid.Column="1" HorizontalAlignment="Left" Width="103" />
             <Label x:Name="label" Content="        Podaci o polazniku" Height="34" VerticalAlignment="Top" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Margin="6,9,0,0"/>
             <Grid HorizontalAlignment="Left" Height="350" VerticalAlignment="Top" Width="505" Margin="96,34,0,0" Grid.RowSpan="2" Grid.Column="1">

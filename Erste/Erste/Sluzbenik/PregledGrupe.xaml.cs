@@ -41,7 +41,8 @@ namespace Erste.Sluzbenik
             }
             if (grupa is null)
             {
-                NazivGrupeCombo.IsEnabled = false;
+                MessageBox.Show("Nema postojećih grupa. Prvo kreirajte bar jednu, da biste mogli pregledati grupe.", "Nema grupa", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                if(IsActive) Close();
                 return;
             }
             using (ErsteModel ersteModel = new ErsteModel())
@@ -478,6 +479,10 @@ namespace Erste.Sluzbenik
         {
             IzmjenaGrupe izmjenaGrupe = new IzmjenaGrupe(grupa.Id);
             izmjenaGrupe.ShowDialog();
+            using (ErsteModel ersteModel = new ErsteModel())
+            {
+                grupa = ersteModel.grupe.Find(grupa.Id);
+            }
             Init();
         }
     }

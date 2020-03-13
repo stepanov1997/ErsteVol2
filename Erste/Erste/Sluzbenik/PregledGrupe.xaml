@@ -5,27 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Erste.Sluzbenik"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="Erste.Sluzbenik.PregledGrupe"
-        mc:Ignorable="d" Height="605.833" Width="973.333" MinHeight="600" MinWidth="600" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Title="Erste - pregled grupe" Icon="../Resources/erste_logo.png" Height="605.833" Width="973.333" MinHeight="600" MinWidth="600" WindowStartupLocation="CenterScreen">
     <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
-            <ColumnDefinition Width="100*"></ColumnDefinition>
+            <ColumnDefinition Width="62*"></ColumnDefinition>
+            <ColumnDefinition Width="64*"></ColumnDefinition>
+            <ColumnDefinition Width="119*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="64*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="64*"></ColumnDefinition>
+            <ColumnDefinition Width="65*"></ColumnDefinition>
+            <ColumnDefinition Width="64*"></ColumnDefinition>
+            <ColumnDefinition Width="64*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100*"></RowDefinition>
+            <RowDefinition Height="170*"></RowDefinition>
             <RowDefinition Height="60*"></RowDefinition>
             <RowDefinition Height="60*"></RowDefinition>
             <RowDefinition Height="60*"></RowDefinition>
@@ -51,31 +51,25 @@
             <TextBlock x:Name="naslov" TextAlignment="Center" VerticalAlignment="Top" FontSize="19" FontWeight="Bold" Foreground="DarkRed" Text="Podaci o grupi"/>
         </Border>
 
-        <Border BorderBrush="{x:Null}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Grid.RowSpan="1" HorizontalAlignment="Center">
+        <Border BorderBrush="{x:Null}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Grid.RowSpan="1" HorizontalAlignment="Center" Height="16" Width="68">
             <TextBlock x:Name="label" Text="Broj članova:" TextAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-        <Border BorderBrush="Black" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" BorderThickness="0,1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="BrojClanovaBox" Text="" TextAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
+        <TextBlock x:Name="BrojClanovaBox" Text="" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="18" Width="auto" TextAlignment="Center" />
 
-        <Border BorderBrush="{x:Null}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <Border BorderBrush="{x:Null}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Width="58" >
             <TextBlock x:Name="od" Text="Nivo kursa:" TextAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-        <Border BorderBrush="Black" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" BorderThickness="0,1" HorizontalAlignment="Center" Grid.RowSpan="1" VerticalAlignment="Center">
-            <TextBlock x:Name="NivoKursa" Text="" TextAlignment="Center" VerticalAlignment="Center" />
-        </Border>
+        <TextBlock x:Name="NivoKursa" Text="" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.RowSpan="1" VerticalAlignment="Center" Height="19" Width="auto" TextAlignment="Center" />
 
-        <Border BorderBrush="{x:Null}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border BorderBrush="{x:Null}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Width="58">
             <TextBlock x:Name="dp" TextAlignment="Center" VerticalAlignment="Center" Text="Jezik kursa:"></TextBlock>
         </Border>
-        <Border BorderBrush="Black" Grid.Row="4" Grid.Column="4" BorderThickness="0,1" HorizontalAlignment="Center" Grid.ColumnSpan="3" VerticalAlignment="Center">
-            <TextBlock x:Name="jezikKursa" Text="" TextAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
+        <TextBlock x:Name="jezikKursa" Text="" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3"  HorizontalAlignment="Center" Height="19" Margin="35.333,4,30,2.333" Width="auto" TextAlignment="Center" VerticalAlignment="Center"/>
 
-        <Button x:Name="PovratakButton" Grid.Column="3" Grid.Row="15" Grid.RowSpan="2" Grid.ColumnSpan="3" Content="Zatvori prozor" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="Potvrdi_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Width="158" VerticalAlignment="Top"/>
-        <Button x:Name="BrisanjeButton" Grid.Column="6" Grid.Row="15" Grid.RowSpan="2" Grid.ColumnSpan="3" Content="Obriši grupu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="ObrisiGrupu_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Width="158" VerticalAlignment="Top"/>
-        <Button x:Name="IzmjenaButton" Grid.Column="9" Grid.Row="15" Grid.RowSpan="2" Grid.ColumnSpan="3" Content="Izmjeni grupu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="IzmjeniGrupu_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Width="158" VerticalAlignment="Top"/>
-        <DataGrid x:Name="TerminiTable" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="6" Grid.RowSpan="4" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" BeginningEdit="Table_OnBeginningEdit" Height="160" VerticalAlignment="Top">
+        <Button x:Name="PovratakButton" Grid.Column="2" Grid.Row="14" Grid.RowSpan="3" Grid.ColumnSpan="5" Content="Zatvori prozor" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="Potvrdi_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Width="158" VerticalAlignment="Top" Margin="102,40.333,63.333,0"/>
+        <Button x:Name="BrisanjeButton" Grid.Column="6" Grid.Row="14" Grid.RowSpan="3" Grid.ColumnSpan="3" Content="Obriši grupu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="ObrisiGrupu_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Width="158" VerticalAlignment="Top" Margin="21,40.333,15.667,0"/>
+        <Button x:Name="IzmjenaButton" Grid.Column="9" Grid.Row="14" Grid.RowSpan="3" Grid.ColumnSpan="3" Content="Izmjeni grupu" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Click="IzmjeniGrupu_Click" Style="{DynamicResource buttonStyle}" Height="48" Padding="0" Width="158" VerticalAlignment="Top" Margin="19.333,40.333,17.333,0"/>
+        <DataGrid x:Name="TerminiTable" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="7" Grid.RowSpan="4" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" BeginningEdit="Table_OnBeginningEdit" Height="160" VerticalAlignment="Top" Margin="0,1.333,62.333,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="80*" Header="Dan" Binding="{Binding Dan}"/>
                 <DataGridTextColumn Width="100*" Header="Početak termina" Binding="{Binding OdString}"/>
@@ -89,10 +83,10 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Border Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="6" Height="20" VerticalAlignment="Bottom">
+        <Border Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="7" Height="20" VerticalAlignment="Bottom" Margin="1.667,0,60.667,24.667" Grid.RowSpan="2">
             <TextBlock Text="Polaznici" TextAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-        <DataGrid x:Name="PolazniciTable" Grid.Row="2" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="6" Height="160" VerticalAlignment="Top" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" BeginningEdit="Table_OnBeginningEdit">
+        <DataGrid x:Name="PolazniciTable" Grid.Row="2" Grid.Column="8" Grid.ColumnSpan="7" Grid.RowSpan="7" Height="160" VerticalAlignment="Top" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" BeginningEdit="Table_OnBeginningEdit" Margin="1.667,0.667,60.667,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding osoba.Ime}"/>
                 <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding osoba.Prezime}"/>
@@ -107,7 +101,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid x:Name="ProfesoriTable" Grid.Row="10" Grid.Column="8" Grid.ColumnSpan="6" Grid.RowSpan="4" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" BeginningEdit="Table_OnBeginningEdit" Height="160" VerticalAlignment="Top">
+        <DataGrid x:Name="ProfesoriTable" Grid.Row="10" Grid.Column="8" Grid.ColumnSpan="7" Grid.RowSpan="4" ColumnHeaderStyle="{StaticResource DataGridErsteStyle}" CellStyle="{StaticResource DataGridCellErsteStyle}" BeginningEdit="Table_OnBeginningEdit" Height="160" VerticalAlignment="Top" Margin="1.667,1.333,60.667,0">
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*" Header="Ime" Binding="{Binding osoba.Ime}"/>
                 <DataGridTextColumn Width="*" Header="Prezime" Binding="{Binding osoba.Prezime}"/>
@@ -122,26 +116,22 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Border Grid.RowSpan="1" Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="6" Height="20" VerticalAlignment="Center">
+        <Border Grid.RowSpan="1" Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="7" Height="20" VerticalAlignment="Center" Margin="1.667,2.667,60.667,2.667">
             <TextBlock Text="Profesori" TextAlignment="Center" VerticalAlignment="Center"/>
         </Border>
-        <Border Grid.RowSpan="1" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="6" Height="20" VerticalAlignment="Bottom">
+        <Border Grid.RowSpan="2" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="7" Height="20" VerticalAlignment="Bottom" Margin="0,0,62.333,41.667">
             <TextBlock Text="Termini" TextAlignment="Center" VerticalAlignment="Top" />
         </Border>
-        <Border BorderBrush="{x:Null}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <Border BorderBrush="{x:Null}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Width="66" >
             <TextBlock x:Name="dp1" TextAlignment="Center" VerticalAlignment="Center" Text="Naziv grupe:"/>
         </Border>
-        <ComboBox x:Name="NazivGrupeCombo" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" Grid.RowSpan="1" VerticalAlignment="Center" SelectionChanged="PromjenaGrupe_SelectionChanged"/>
-        <ComboBox x:Name="dodavanjeProfesora" Grid.Row="14" Grid.Column="8" Grid.ColumnSpan="6" Background="Red" IsReadOnly="True"  IsEditable="True" Text="Dodjeli profesore" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="20" Padding="0" VerticalAlignment="Top" SelectionChanged="DodavanjeProfesora_OnSelectionChanged"/>
-        <ComboBox x:Name="dodavanjeTermina" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="6" Background="Red" IsReadOnly="True"  IsEditable="True" Text="Dodjeli termin" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="19" Padding="0" VerticalAlignment="Top" SelectionChanged="DodavanjeTermina_OnSelectionChanged"/>
-        <ComboBox x:Name="dodavanjePolaznika" Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="6" Background="Red" IsReadOnly="True"  IsEditable="True" Text="Dodjeli polaznika" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="20" Padding="0" VerticalAlignment="Top" SelectionChanged="DodavanjePolaznika_OnSelectionChanged"/>
-        <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Datum od:"/>
-        <Label Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Datum do:"/>
-        <Border BorderBrush="Black" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="3" BorderThickness="0,1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="datumOd" Text="" TextAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
-        <Border BorderBrush="Black" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="3" BorderThickness="0,1" HorizontalAlignment="Center" Grid.RowSpan="1"  VerticalAlignment="Center">
-            <TextBlock x:Name="datumDo" Text="" TextAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
+        <ComboBox x:Name="NazivGrupeCombo" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" Grid.RowSpan="1" VerticalAlignment="Center" SelectionChanged="PromjenaGrupe_SelectionChanged" Height="22" Margin="2.667,2,62.333,1.333"/>
+        <ComboBox x:Name="dodavanjeProfesora" Grid.Row="14" Grid.Column="8" Grid.ColumnSpan="7" Background="Red" IsReadOnly="True"  IsEditable="True" Text="Dodjeli profesore" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="20" Padding="0" VerticalAlignment="Top" SelectionChanged="DodavanjeProfesora_OnSelectionChanged" Margin="1.667,0.333,60.667,0"/>
+        <ComboBox x:Name="dodavanjeTermina" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="7" Background="Red" IsReadOnly="True"  IsEditable="True" Text="Dodjeli termin" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="19" Padding="0" VerticalAlignment="Top" SelectionChanged="DodavanjeTermina_OnSelectionChanged" Margin="0,0.333,62.333,0"/>
+        <ComboBox x:Name="dodavanjePolaznika" Grid.Row="8" Grid.Column="8" Grid.ColumnSpan="7" Background="Red" IsReadOnly="True"  IsEditable="True" Text="Dodjeli polaznika" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="20" Padding="0" VerticalAlignment="Top" SelectionChanged="DodavanjePolaznika_OnSelectionChanged" Margin="1.667,0.667,60.667,0"/>
+        <Label Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Datum od:" Height="26" Grid.RowSpan="1" Width="66"/>
+        <Label Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Datum do:" Height="25" Grid.RowSpan="1" Width="66"/>
+        <TextBlock x:Name="datumOd" Text="" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="18" Width="auto" TextAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock x:Name="datumDo" Text="" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.RowSpan="1" Height="19"  Width="auto" TextAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>
