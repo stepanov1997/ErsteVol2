@@ -351,11 +351,16 @@ namespace Erste.Sluzbenik
                         string ime = p[0];
                         string prezime = p[1];
                         string email = p[2];
+                        
+                        string odabraniNivo = NivoKursa.Text;
+                        string odabraniJezik = jezikKursa.Text;
                         List<polaznik> polaznici = ersteModel.polaznici.Where(g =>
                             g.osoba.Vazeci && g.osoba.Ime == ime && g.osoba.Prezime == prezime &&
-                            g.osoba.Email == email).ToList();
+                            g.osoba.Email == email && g.polaznik_na_cekanju.kursevi.Any(k => k.Vazeci && k.Nivo == odabraniNivo && k.jezik.Vazeci && k.jezik.Naziv == odabraniJezik)).ToList();
                         polaznik polaznik = null;
                         polaznik_na_cekanju p_na_c = null;
+                        
+
                         int index = 0;
                         while (index < polaznici.Count && (p_na_c=(polaznik = polaznici[index++]).polaznik_na_cekanju) is null);
                         if (p_na_c is null)
@@ -366,8 +371,7 @@ namespace Erste.Sluzbenik
                         }
                         grupa grupica = ersteModel.grupe.Where(gr => gr.Vazeca && gr.Id == grupa.Id).ToList()
                                                         .First();
-                        string odabraniNivo = NivoKursa.Text;
-                        string odabraniJezik = jezikKursa.Text;
+                        
                         grupica.polaznici.Add(polaznik);
                         polaznik.grupe.Add(grupica);
                         kurs kurs_za_p_na_c = p_na_c.kursevi.First(k => k.Vazeci && k.Nivo == odabraniNivo && k.jezik.Vazeci && k.jezik.Naziv == odabraniJezik);
